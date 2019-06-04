@@ -330,6 +330,7 @@ public class Controller implements Initializable {
             //fullName.setCellValueFactory(new PropertyValueFactory<>("fullName") );
 
             tblViewEducationPlans.setItems(data);
+            //asdad
 
 
 
