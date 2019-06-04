@@ -18,19 +18,26 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    private Button btnLogin,btnManageLogins;
+    private Button btnLogin;
     @FXML
     private Pane paneEducationPlans,paneEducationPlansCreateAndEdit,paneCoursesAndProviders,paneCoursesAndProvidersAddAndEdit,
     paneCustomerCompanies,paneCustomerCompaniesAddAndEdit,paneCustomerEmployee,paneCustomerEmployeeAddAndEdit,paneManageLogins
             ,paneManageLoginsCreateAndEdit,tblViewCoursesAndProviders,tblViewManageLogins, tblViewEducation,tblViewCustomerCompanies,tblViewCustomerEmployee;
     @FXML
-    private TextField tfUsername,tfPassword;
+    private TextField tfUsername,tfPassword,tfEducationCustomerEmployeeName,tfEducationCustomerCompanyName,tfEducationPriority,
+            tfEducationProvider,tfEducationCprNr,tfEducationSmartAcademyEmployeeID,tfCourseAndProvidersCourseTitle,tfCourseAndProvidersProviderZipcode,tfCourseAndProvidersProviderAddress,tfCourseAndProvidersNumberOfDays,
+    tfCustomerCompaniesCVRNR,tfCustomerCompaniesName,tfCustomerCompaniesEmail,tfCustomerCompaniesZipcode,tfCustomerCompaniesPhone,tfCustomerCompaniesAddress;
     private String admin = "Admin";
     private String smartAcademyEmp = "SA";
     private String customer = "Customer";
     private String userNameData;
     private String passwordData;
     private String personID;
+    @FXML
+    private TextArea taCoursesAndProvidersCourseDescription;
+    @FXML
+    private DatePicker dpEducationStartDate,dpEducationEndDate;
+    @FXML
     private TableView tblViewEducationPlans;
 
     @Override
@@ -46,11 +53,16 @@ public class Controller implements Initializable {
             }
         } while (true);
 
+        try {
+            DB.storedProcSA_view_ep(1,tblViewEducationPlans);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
-    private void btnNextPage (ActionEvent event ) throws NullPointerException, IOException {
+    private void handleLogin (ActionEvent event ) throws NullPointerException, IOException {
 
         String userName = tfUsername.getText();
         String password = tfPassword.getText();
@@ -66,7 +78,7 @@ public class Controller implements Initializable {
         Stage stage;
         Parent root;
         stage = (Stage) btnLogin.getScene().getWindow() ;
-        root= FXMLLoader.load(getClass().getResource("scenes/homePage.fxml"));
+        root= FXMLLoader.load(getClass().getResource("scenes/homePageAdmin.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -79,7 +91,7 @@ public class Controller implements Initializable {
             Stage stage;
             Parent root;
             stage = (Stage) btnLogin.getScene().getWindow() ;
-            root= FXMLLoader.load(getClass().getResource("scenes/homePageSAEmp.fxml"));
+            root= FXMLLoader.load(getClass().getResource("scenes/homePageSA.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -88,7 +100,7 @@ public class Controller implements Initializable {
             Stage stage;
             Parent root;
             stage = (Stage) btnLogin.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("scenes/homePage.fxml"));
+            root = FXMLLoader.load(getClass().getResource("scenes/homePageCustomer.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -99,7 +111,7 @@ public class Controller implements Initializable {
             }
 
     }
-    
+
  // here we start with the actions for educations plans
   @FXML
     private void showBtnEducationPlans(ActionEvent event) throws NullPointerException
@@ -116,7 +128,6 @@ public class Controller implements Initializable {
     private void showEducationPlans (ActionEvent event) throws SQLException {
         tblViewEducation.setVisible(true);
         paneEducationPlansCreateAndEdit.setVisible(false);
-        DB.storedProcSA_view_ep(1,"12345",tblViewEducationPlans);
 
 
     }
@@ -214,6 +225,7 @@ public class Controller implements Initializable {
         paneEducationPlans.setVisible(false);
         paneCoursesAndProviders.setVisible(false);
         paneManageLogins.setVisible(true);
+
     }
     @FXML
     private void showtblViewLogins(ActionEvent event)
@@ -227,7 +239,50 @@ public class Controller implements Initializable {
         paneManageLoginsCreateAndEdit.setVisible(true);
         tblViewManageLogins.setVisible(false);
     }
+    // end of manage LOGINS
 
+    private void createNewEducationPlan()
+    {
+        // CPRNR SA_ID Name Priority
+
+        DB.insertSQL("");
+
+
+    }
+    @FXML
+    private void createNewCourse(ActionEvent event)
+    {
+        String title =  tfCourseAndProvidersCourseTitle.getText();
+        String numberOfDays = tfCourseAndProvidersNumberOfDays.getText();
+        String description = taCoursesAndProvidersCourseDescription.getText();
+
+        DB.insertSQL("insert into tbl_Courses values('"+title+"','"+numberOfDays+"','"+description+"')");
+
+        tfCourseAndProvidersCourseTitle.setText("");
+        tfCourseAndProvidersNumberOfDays.setText("");
+        taCoursesAndProvidersCourseDescription.setText("");
+
+    }
+    @FXML
+    private void createNewCompany(ActionEvent event)
+    {
+        String CVRNR = tfCustomerCompaniesCVRNR.getText();
+        String name = tfCustomerCompaniesName.getText();
+        String e_mail = tfCustomerCompaniesEmail.getText();
+        int zipcode = Integer.parseInt(tfCustomerCompaniesZipcode.getText());
+        String phoneNr = tfCustomerCompaniesPhone.getText();
+        String address = tfCustomerCompaniesAddress.getText();
+
+        DB.insertSQL("insert into tbl_Customer values('"+CVRNR+"','"+name+"','"+e_mail+"',"+zipcode+",'"+phoneNr+"','"+address+"')");
+
+        tfCustomerCompaniesCVRNR.setText("");
+        tfCustomerCompaniesName.setText("");
+        tfCustomerCompaniesEmail.setText("");
+        tfCustomerCompaniesZipcode.setText("");
+        tfCustomerCompaniesPhone.setText("");
+        tfCustomerCompaniesAddress.setText("");
+
+    }
 
 
 

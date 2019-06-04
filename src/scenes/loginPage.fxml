@@ -17,12 +17,12 @@
 <AnchorPane maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: White; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <Polygon fill="#2e9afe" points="0.0, 0.0, 601.0, 0.0, 0.0, 500.0" stroke="BLACK" strokeType="INSIDE" />
-      <ImageView fitHeight="638.0" fitWidth="889.0" layoutX="-249.0" layoutY="-186.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="638.0" fitWidth="889.0" layoutX="-249.0" layoutY="-186.0" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../Ressources/logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnLogin" layoutX="780.0" layoutY="549.0" mnemonicParsing="false" onAction="#btnNextPage" prefHeight="60.0" prefWidth="120.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Login" textAlignment="CENTER">
+      <Button fx:id="btnLogin" layoutX="780.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="60.0" prefWidth="120.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Login" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
@@ -34,5 +34,10 @@
          <font>
             <Font size="20.0" />
          </font></TextField>
+      <Label fx:id="labelIncorrectLogin" alignment="CENTER" layoutX="601.0" layoutY="549.0" prefHeight="60.0" prefWidth="170.0" text="Incorrect Login!" visible="false">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

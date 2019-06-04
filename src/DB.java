@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -28,7 +29,7 @@ public class DB {
     private static String userName;
     private static String password;
 
-    private static ObservableList<ObservableList> data;
+
     public static final String NOMOREDATA ="|ND|";
     private static int numberOfColumns;
     private static int currentColumnNumber=1;
@@ -214,52 +215,47 @@ public class DB {
         }
         return false;
     }
-    public static void storedProcSA_view_ep(int SA_ID,String CVR_NR,TableView tableView) throws SQLException {
+    public static  void storedProcSA_view_ep(int SA_ID, TableView tableView) throws SQLException,NullPointerException {
+        ObservableList<ObservableList> data = FXCollections.observableArrayList();
+
         try {
+
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con= DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=SmartAcademy",userName,password);
-        CallableStatement cs = con.prepareCall("{CALL SA_view_ep(?,?)}");
+        CallableStatement cs = con.prepareCall("{CALL SA_view_ep(?)}");
 
         cs.setInt(1, SA_ID);
-
-        cs.setString(2, CVR_NR);
-
         cs.execute();
-
+        ResultSet rs2 = con.createStatement().executeQuery("execute SA_view_ep "+1+"");
         ResultSet rs = cs.getResultSet();
-        for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+        ObservableList<String> row = FXCollections.observableArrayList();
+        ResultSet rs3 = con.createStatement().executeQuery("select fld_CVR_NR from tbl_Customer");
 
-            final int j = i;
+            while (rs2.next()) {
 
-            /*TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i+1));
-            col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList,String>, ObservableValue>() {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList,String>  param) {
-                    return new SimpleStringProperty(param.getValue().get(j).toString());
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    row.add(rs2.getString(i));
+                    System.out.println(row);
                 }
-            });
-
-            tableView.getColumns().addAll(col);*/
-
-
-        }
-
-        while (rs.next()) {
-            ObservableList<String> row = FXCollections.observableArrayList();
-            for (int i = 1; i < rs.getMetaData().getColumnCount(); i++) {
-                row.add(rs.getString(i));
+                data.add(row);
+                System.out.println(data);
             }
-            System.out.println("Row 1 Added " + row);
-            data.add(row);
-        }
-
-        tableView.setItems(data);
+            //tableView.setItems(data);
 
 
 
-    }catch(Exception e){
+
+
+
+
+
+        }catch(Exception e){
         e.printStackTrace();
         System.out.println("Error on Building Data");
     }
-}}
+
+
+}
+
+}
