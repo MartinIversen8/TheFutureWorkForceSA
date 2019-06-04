@@ -1,3 +1,9 @@
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,13 +14,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
+import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.CallableStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Controller implements Initializable {
     @FXML
@@ -39,6 +45,10 @@ public class Controller implements Initializable {
     private DatePicker dpEducationStartDate,dpEducationEndDate;
     @FXML
     private TableView tblViewEducationPlans;
+    @FXML
+    private TableColumn<ObservableList<Integer>, Integer> ID,AMU;
+    @FXML
+    private TableColumn<ObservableList<String>, String> fullName,CPRNR,company,provider,priority,startDate,endDate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,11 +63,7 @@ public class Controller implements Initializable {
             }
         } while (true);
 
-        try {
-            DB.storedProcSA_view_ep(1,tblViewEducationPlans);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -78,7 +84,7 @@ public class Controller implements Initializable {
         Stage stage;
         Parent root;
         stage = (Stage) btnLogin.getScene().getWindow() ;
-        root= FXMLLoader.load(getClass().getResource("scenes/homePageAdmin.fxml"));
+        root= FXMLLoader.load(getClass().getResource("scenes/homePageAdmin2.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -281,6 +287,57 @@ public class Controller implements Initializable {
         tfCustomerCompaniesZipcode.setText("");
         tfCustomerCompaniesPhone.setText("");
         tfCustomerCompaniesAddress.setText("");
+
+    }
+    @FXML
+    private void refreshBtn(ActionEvent event) throws SQLException {
+        ObservableList<ObservableList> data = FXCollections.observableArrayList();
+        // 9 ting er der per row
+
+        try {
+
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con= DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=SmartAcademy","sa","Procity8");
+            CallableStatement cs = con.prepareCall("{CALL SA_view_ep(?)}");
+
+            cs.setInt(1, 1);
+            cs.execute();
+            ResultSet rs2 = con.createStatement().executeQuery("execute SA_view_ep "+1+"");
+            ResultSet rs = cs.getResultSet();
+            ObservableList<String> row = FXCollections.observableArrayList();
+            ResultSet rs3 = con.createStatement().executeQuery("select fld_CVR_NR from tbl_Customer");
+
+            while (rs2.next()) {
+
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    row.add(rs2.getString(i));
+                    System.out.println(row);
+                }
+                data.add(row);
+                System.out.println(data);
+            }
+
+
+
+            /*fullName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList<String>, String> param) {
+                    return new SimpleStringProperty(param.getValue().get(0));
+                }
+            });*/
+
+            //fullName.setCellValueFactory(new PropertyValueFactory<>("fullName") );
+
+            tblViewEducationPlans.setItems(data);
+
+
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
 
     }
 

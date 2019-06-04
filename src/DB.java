@@ -241,7 +241,7 @@ public class DB {
                 data.add(row);
                 System.out.println(data);
             }
-            //tableView.setItems(data);
+            tableView.setItems(data);
 
 
 
