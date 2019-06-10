@@ -21,7 +21,7 @@ import java.util.Properties;
  * @author tha
  */
 public class DB {
-    private static Connection con;
+    public static Connection con;
     private static PreparedStatement ps;
     private static ResultSet rs;
     private static String port;
@@ -215,47 +215,13 @@ public class DB {
         }
         return false;
     }
-    public static  void storedProcSA_view_ep(int SA_ID, TableView tableView) throws SQLException,NullPointerException {
-        ObservableList<ObservableList> data = FXCollections.observableArrayList();
 
-        try {
-
-
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con= DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=SmartAcademy",userName,password);
-        CallableStatement cs = con.prepareCall("{CALL SA_view_ep(?)}");
-
-        cs.setInt(1, SA_ID);
-        cs.execute();
-        ResultSet rs2 = con.createStatement().executeQuery("execute SA_view_ep "+1+"");
-        ResultSet rs = cs.getResultSet();
-        ObservableList<String> row = FXCollections.observableArrayList();
-        ResultSet rs3 = con.createStatement().executeQuery("select fld_CVR_NR from tbl_Customer");
-
-            while (rs2.next()) {
-
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    row.add(rs2.getString(i));
-                    System.out.println(row);
-                }
-                data.add(row);
-                System.out.println(data);
-            }
-            tableView.setItems(data);
-
-
-
-
-
-
-
-
-        }catch(Exception e){
-        e.printStackTrace();
-        System.out.println("Error on Building Data");
+    public static ResultSet createProcResultset(String sql) throws SQLException, ClassNotFoundException {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection con= DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=SmartAcademy","sa","Procity8");
+        ResultSet rs = con.createStatement().executeQuery(sql);
+        return rs;
     }
 
-
 }
 
-}

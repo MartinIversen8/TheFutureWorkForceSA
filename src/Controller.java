@@ -1,7 +1,3 @@
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,13 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.*;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,38 +29,35 @@ public class Controller implements Initializable {
     @FXML
     private TextField tfUsername,tfPassword,tfEducationCustomerEmployeeName,tfEducationCustomerCompanyName,tfEducationPriority,
             tfEducationProvider,tfEducationCprNr,tfEducationSmartAcademyEmployeeID,tfCourseAndProvidersCourseTitle,tfCourseAndProvidersProviderZipcode,tfCourseAndProvidersProviderAddress,tfCourseAndProvidersNumberOfDays,
-    tfCustomerCompaniesCVRNR,tfCustomerCompaniesName,tfCustomerCompaniesEmail,tfCustomerCompaniesZipcode,tfCustomerCompaniesPhone,tfCustomerCompaniesAddress;
+    tfCustomerCompaniesCVRNR,tfCustomerCompaniesName,tfCustomerCompaniesEmail,tfCustomerCompaniesZipcode,tfCustomerCompaniesPhone,tfCustomerCompaniesAddress,tfManageLoginsUsername,tfManageLoginsPersonID,tfManageLoginsPassword,tfEducationAmuNR
+            ,tfCustomerEmployeesName,tfCustomerEmployeesPhone,tfCustomerEmployeesCPR,tfCustomerEmployeesCVR,tfCustomerEmployeesEmail;
     private String admin = "Admin";
     private String smartAcademyEmp = "SA";
     private String customer = "Customer";
     private String userNameData;
     private String passwordData;
     private String personID;
+
     @FXML
     private TextArea taCoursesAndProvidersCourseDescription;
     @FXML
     private DatePicker dpEducationStartDate,dpEducationEndDate;
     @FXML
-    private TableView tblViewEducationPlans;
+    private TableView<EducationPlans> tblViewEducationPlans,tblViewCustomerEmployeeTableView;
+
     @FXML
-    private TableColumn<ObservableList<Integer>, Integer> ID,AMU;
+    private TableColumn<ObservableList<String>, String> fullName,cprNr,company,provider,priority,startDate,endDate,epID,AMU,cours,mail;
     @FXML
-    private TableColumn<ObservableList<String>, String> fullName,CPRNR,company,provider,priority,startDate,endDate;
+    private TableColumn<ObservableList<String>,String> columnCustomerEmployeeName,columnCustomerEmployeePhoneNr,columnCustomerEmployeeMail,columnCustomerEmployeeCPRNR,columnCustomerEmployeeCVRNR;
+    @FXML
+    private ListView<String> listView;
+
+    ObservableList<EducationPlans> epList = FXCollections.observableArrayList(new ArrayList<>());
+private int index;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<String> personIDList =  new ArrayList<>();
-        DB.selectSQL(" select fld_Person_ID from tbl_Log_In");
-        do {
-            String data = DB.getData();
-            if (data.equals(DB.NOMOREDATA)) {
-                break;
-            } else {
-                personIDList.add(data);
-            }
-        } while (true);
-
-
 
     }
 
@@ -144,6 +138,97 @@ public class Controller implements Initializable {
         tblViewEducation.setVisible(false);
         paneEducationPlansCreateAndEdit.setVisible(true);
     }
+
+    @FXML
+    private void editEducationPlan() {
+
+        tblViewEducation.setVisible(false);
+        paneEducationPlansCreateAndEdit.setVisible(true);
+        index = tblViewEducationPlans.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        LocalDate localDateEnd = LocalDate.parse(tblViewEducationPlans.getItems().get(index).getEndDate());
+        LocalDate localDateStart = LocalDate.parse(tblViewEducationPlans.getItems().get(index).getStartDate());
+        tfEducationAmuNR.setText(tblViewEducationPlans.getItems().get(index).getAMU());
+        tfEducationCprNr.setText(tblViewEducationPlans.getItems().get(index).getCprNr());
+        tfEducationCustomerCompanyName.setText(tblViewEducationPlans.getItems().get(index).getCompany());
+        tfEducationCustomerEmployeeName.setText(tblViewEducationPlans.getItems().get(index).getName());
+        tfEducationPriority.setText(tblViewEducationPlans.getItems().get(index).getPriority());
+        dpEducationEndDate.setValue(localDateEnd);
+        dpEducationStartDate.setValue(localDateStart);
+
+    }
+
+    @FXML
+    private void upDateEp(ActionEvent event)
+    {
+        String startDate = dpEducationStartDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String endDate = dpEducationEndDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String amuNo = tfEducationAmuNR.getText();
+        String empName = tfEducationCustomerEmployeeName.getText();
+        String priority = tfEducationPriority.getText();
+        String epId = tblViewEducationPlans.getItems().get(index).getEpID();
+        DB.updateSQL("update tbl_Education_Plan set fld_Name_of_Attendee = '"+empName+"', fld_Prority = '"+priority+"' where fld_Education_Plan_ID = '"+epId+"' ");
+        DB.updateSQL("update tbl_Calendar set fld_Start_Date = '"+startDate+"',fld_End_Date = '"+endDate+"',fld_AMUNo ="+amuNo+" where fld_EducationPlan_ID = '"+epId+"' ");
+
+    }
+
+    @FXML
+    private void delteEp(ActionEvent event)
+    {
+        index = tblViewEducationPlans.getSelectionModel().getFocusedIndex();
+        String epID = tblViewEducationPlans.getItems().get(index).getEpID();
+
+        DB.selectSQL("select fld_ID from tbl_Calendar where fld_EducationPlan_ID = '"+epID+"'");
+        String calendarID = DB.getData();
+        do {
+            String data = DB.getData();
+            if (data.equals(DB.NOMOREDATA)) {
+                break;
+            } else {
+
+            }
+        } while (true);
+        DB.deleteSQL("delete from tbl_Customer_specific_courses where fld_calendar_ID = '"+calendarID+"' ");
+        DB.deleteSQL("delete from tbl_Calendar where fld_EducationPlan_ID = '"+epID+"'");
+        DB.deleteSQL("delete from tbl_Education_Plan where fld_Education_Plan_ID = '"+epID+"'");
+
+    }
+
+    @FXML
+    private void createEP(ActionEvent event)
+    {
+        String startDate = dpEducationStartDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String endDate = dpEducationEndDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String amuNo = tfEducationAmuNR.getText();
+        String cprNr = tfEducationCprNr.getText();
+        String empName = tfEducationCustomerEmployeeName.getText();
+        String priority = tfEducationPriority.getText();
+        String smartAcademyID = tfEducationSmartAcademyEmployeeID.getText();
+        String provider = tfEducationProvider.getText();
+
+        DB.insertSQL("insert into tbl_Education_Plan values('"+priority+"','"+empName+"','"+cprNr+"','"+smartAcademyID+"')");
+        DB.selectSQL("SELECT TOP 1 fld_Education_Plan_ID FROM tbl_Education_Plan ORDER BY fld_Education_Plan_ID DESC");
+        String educationPlanID = DB.getData();
+
+        do {
+            String data = DB.getData();
+            if (data.equals(DB.NOMOREDATA)) {
+                break;
+            } else {
+
+            }
+        } while (true);
+        System.out.println(educationPlanID);
+
+        DB.insertSQL("insert into tbl_Calendar values('"+amuNo+"','"+provider+"','"+startDate+"','"+endDate+"','"+educationPlanID+"')");
+
+        tfEducationProvider.setText("");
+        tfEducationSmartAcademyEmployeeID.setText("");
+        tfEducationPriority.setText("");
+        tfEducationCustomerEmployeeName.setText("");
+        tfEducationCustomerCompanyName.setText("");
+        tfEducationCprNr.setText("");
+        tfEducationAmuNR.setText("");
+    }
     // the end of education plans
 
     // here starts the actions we have for Courses and providers
@@ -204,7 +289,7 @@ public class Controller implements Initializable {
         paneCustomerCompanies.setVisible(false);
         paneEducationPlans.setVisible(false);
         paneCoursesAndProviders.setVisible(false);
-
+        paneManageLogins.setVisible(false);
     }
     @FXML
     private void showAddEmployee(ActionEvent event)
@@ -246,13 +331,22 @@ public class Controller implements Initializable {
         tblViewManageLogins.setVisible(false);
     }
     // end of manage LOGINS
-
-    private void createNewEducationPlan()
+    @FXML
+    private void createNewCus_emp(ActionEvent event)
     {
-        // CPRNR SA_ID Name Priority
+        String cus_empName = tfCustomerEmployeesName.getText();
+        String cus_empPhoneNr = tfCustomerEmployeesPhone.getText();
+        String cus_empCPRNR = tfCustomerEmployeesCPR.getText();
+        String cus_emp_Employer = tfCustomerEmployeesCVR.getText();
+        String cus_empMail = tfCustomerEmployeesEmail.getText();
 
-        DB.insertSQL("");
+        DB.insertSQL("insert into tbl_Customer_Employee values ('"+cus_empCPRNR+"','"+cus_empName+"','"+cus_empMail+"','"+cus_empPhoneNr+"','"+cus_emp_Employer+"')");
 
+        tfCustomerEmployeesName.setText("");
+        tfCustomerEmployeesPhone.setText("");
+        tfCustomerEmployeesCPR.setText("");
+        tfCustomerEmployeesCVR.setText("");
+        tfCustomerEmployeesEmail.setText("");
 
     }
     @FXML
@@ -290,49 +384,58 @@ public class Controller implements Initializable {
 
     }
     @FXML
-    private void refreshBtn(ActionEvent event) throws SQLException {
-        ObservableList<ObservableList> data = FXCollections.observableArrayList();
-        // 9 ting er der per row
+    private void createNewLogin(ActionEvent event)
+    {
+        String username = tfManageLoginsUsername.getText();
+        String password = tfManageLoginsPassword.getText();
+        String personID = tfManageLoginsPersonID.getText();
 
+        DB.insertSQL("insert into tbl_Log_In values('"+password+"','"+username+"','"+personID+"')");
+
+        tfManageLoginsPassword.setText("");
+        tfManageLoginsUsername.setText("");
+        tfManageLoginsPersonID.setText("");
+
+    }
+    @FXML
+    private void refreshBtn(ActionEvent event) throws SQLException {
+        int counter = 0;
+        ObservableList<String> row = FXCollections.observableArrayList();
+        tblViewEducationPlans.getItems().clear();
         try {
 
+            ResultSet rs = DB.createProcResultset("execute SA_view_ep "+1+""); // TODO make it so it is not only for SA_emp with id 1, make it so it depends on who is logged in
+            //ObservableList<EducationPlans> epList = FXCollections.observableArrayList(new ArrayList<>());
 
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con= DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=SmartAcademy","sa","Procity8");
-            CallableStatement cs = con.prepareCall("{CALL SA_view_ep(?)}");
+            epID.setCellValueFactory(new PropertyValueFactory<>("epID"));
+            AMU.setCellValueFactory(new PropertyValueFactory<>("AMU"));
+            cours.setCellValueFactory(new PropertyValueFactory<>("cours"));
+            fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+            priority.setCellValueFactory(new PropertyValueFactory<>("priority"));
+            mail.setCellValueFactory(new PropertyValueFactory<>("mail"));
+            startDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+            endDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+            company.setCellValueFactory(new PropertyValueFactory<>("company"));
+            cprNr.setCellValueFactory(new PropertyValueFactory<>("cprNr"));
 
-            cs.setInt(1, 1);
-            cs.execute();
-            ResultSet rs2 = con.createStatement().executeQuery("execute SA_view_ep "+1+"");
-            ResultSet rs = cs.getResultSet();
-            ObservableList<String> row = FXCollections.observableArrayList();
-            ResultSet rs3 = con.createStatement().executeQuery("select fld_CVR_NR from tbl_Customer");
 
-            while (rs2.next()) {
+            while (rs.next()) {
 
                 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    row.add(rs2.getString(i));
-                    System.out.println(row);
+                    row.add(rs.getString(i));
                 }
-                data.add(row);
-                System.out.println(data);
+                }
+
+            for (int i = 0; i <row.size()/10 ; i++) {
+                EducationPlans ep2 = new EducationPlans(row.get(i+counter), row.get(i+counter+1), row.get(i+counter+2), row.get(i+counter+3), row.get(i+counter+4), row.get(i+counter+5),
+                        row.get(i+counter+6), row.get(i+counter+7), row.get(i+counter+8),row.get(i+counter+9));
+                System.out.println("ep2 "+ep2.toString());
+                System.out.println(tblViewEducationPlans.getColumns());
+                epList.add(ep2);
+                counter+=9;
+
             }
-
-
-
-            /*fullName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList<String>, String> param) {
-                    return new SimpleStringProperty(param.getValue().get(0));
-                }
-            });*/
-
-            //fullName.setCellValueFactory(new PropertyValueFactory<>("fullName") );
-
-            tblViewEducationPlans.setItems(data);
-            //asdad
-
-
+            tblViewEducationPlans.setItems(epList);
 
 
         }catch(Exception e){
@@ -341,7 +444,66 @@ public class Controller implements Initializable {
         }
 
     }
+    @FXML
+    private void writeExcel(ActionEvent event) throws Exception {
+        Writer writer = null;
+        try {
+            File file = new File("C:\\Users\\Marti\\Desktop\\csvFiler fra SA\\mojn.csv");
+            writer = new BufferedWriter(new FileWriter(file));
+            for (EducationPlans ep : epList) {
+
+                String text = ep.getEpID() + "" + ep.getAMU() + "" + ep.getCours() + "";
+                writer.write(text);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        finally {
+
+            writer.flush();
+            writer.close();
+        }
+    }
+
+    @FXML
+    private void viewCustomerEmployees(ActionEvent event)
+    {
+        int counter = 0;
+        ObservableList<String> row = FXCollections.observableArrayList();
+        tblViewCustomerEmployeeTableView.getItems().clear();
+        try {
+
+            ResultSet rs = DB.createProcResultset("execute view_cusEmps");
+
+            columnCustomerEmployeeCPRNR.setCellValueFactory(new PropertyValueFactory<>("cprNr"));
+            columnCustomerEmployeeCVRNR.setCellValueFactory(new PropertyValueFactory<>("companyCVRNR"));
+            columnCustomerEmployeeMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
+            columnCustomerEmployeeName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+            columnCustomerEmployeePhoneNr.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
 
 
+            while (rs.next()) {
+
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    row.add(rs.getString(i));
+                }
+            }
+
+            for (int i = 0; i <row.size()/5 ; i++) {
+                CustomerEmployees cus = new CustomerEmployees(row.get(i+counter), row.get(i+counter+1), row.get(i+counter+2), row.get(i+counter+3), row.get(i+counter+4));
+                System.out.println("ep2 "+cus.toString());
+                System.out.println(tblViewCustomerEmployeeTableView.getColumns());
+                epList.add(cus);
+                counter+=4;
+
+            }
+            tblViewCustomerEmployeeTableView.setItems(epList);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
+    }
 
 }

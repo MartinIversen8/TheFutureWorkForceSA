@@ -19,7 +19,7 @@
     <center>
         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;" BorderPane.alignment="CENTER">
             <children>
-                <Pane fx:id="paneEducationPlans" prefHeight="796.0" prefWidth="846.0" visible="false">
+                <Pane fx:id="paneEducationPlans" prefHeight="796.0" prefWidth="846.0">
                     <children>
                         <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Education Plans">
                             <font>
@@ -46,7 +46,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Pane fx:id="paneEducationPlansCreateAndEdit" layoutY="112.0" prefHeight="684.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #CEE3F6;" visible="false">
+                        <Pane fx:id="paneEducationPlansCreateAndEdit" layoutY="112.0" prefHeight="684.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #CEE3F6;">
                             <children>
                                 <TextField fx:id="tfEducationCustomerEmployeeName" alignment="CENTER" layoutX="87.0" layoutY="61.0" prefHeight="40.0" prefWidth="250.0" promptText="Customer Employee Name" style="-fx-border-color: Black; -fx-border-width: 2;" />
                                 <TextField fx:id="tfEducationCustomerCompanyName" alignment="CENTER" layoutX="463.0" layoutY="61.0" prefHeight="40.0" prefWidth="250.0" promptText="Customer Company Name" style="-fx-border-color: Black; -fx-border-width: 2;" />
@@ -58,7 +58,7 @@
                                 <DatePicker fx:id="dpEducationStartDate" layoutX="463.0" layoutY="273.0" prefHeight="40.0" prefWidth="250.0" promptText="Start Date" style="-fx-border-color: black; -fx-border-width: 2;" />
                                 <TextField fx:id="tfEducationAmuNR" alignment="CENTER" layoutX="87.0" layoutY="273.0" prefHeight="40.0" prefWidth="250.0" promptText="AMU NR." style="-fx-border-color: Black; -fx-border-width: 2;" />
                                 <Button fx:id="btnEducationChooseAmuNr" layoutX="87.0" layoutY="349.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-border-color: black; -fx-border-width: 2;" text="Choose AMU NR." />
-                                <Button fx:id="btnEducationOK" alignment="CENTER" layoutX="375.0" layoutY="507.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="65.0" style="-fx-border-color: Black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
+                                <Button fx:id="btnEducationOK" alignment="CENTER" layoutX="375.0" layoutY="507.0" mnemonicParsing="false" onAction="#createEP" prefHeight="45.0" prefWidth="65.0" style="-fx-border-color: Black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
                                     <font>
                                         <Font size="20.0" />
                                     </font>
@@ -67,7 +67,7 @@
                         </Pane>
                         <Pane fx:id="tblViewEducation" layoutX="1.0" layoutY="112.0" prefHeight="685.0" prefWidth="846.0" visible="false">
                             <children>
-                                <TableView prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                <TableView fx:id="tblViewEducationPlans" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                                     <columns>
                                         <TableColumn prefWidth="43.0" text="ID" />
                                         <TableColumn prefWidth="161.0" text="Full name" />
@@ -80,7 +80,7 @@
                                         <TableColumn prefWidth="76.0" text="End Date" />
                                     </columns>
                                 </TableView>
-                                <Button fx:id="btnEducationExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                                <Button fx:id="btnEducationExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" onAction="#refreshBtn" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
                             </children>
                         </Pane>
                     </children>

@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        root = FXMLLoader.load(getClass().getResource("scenes/loginPage.fxml"));
+        root = FXMLLoader.load(getClass().getResource("scenes/homePageAdmin2.fxml"));
         primaryStage.setTitle("FutureWorkForce");
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
