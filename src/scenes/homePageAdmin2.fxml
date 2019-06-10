@@ -199,7 +199,7 @@
                   </Pane>
                </children>
             </Pane>
-            <Pane fx:id="paneCustomerEmployee" prefHeight="796.0" prefWidth="846.0">
+            <Pane fx:id="paneCustomerEmployee" prefHeight="796.0" prefWidth="846.0" visible="false">
                <children>
                   <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Customer Employee" textAlignment="CENTER">
                      <font>
@@ -240,14 +240,14 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Pane fx:id="tblViewCustomerEmployee" layoutX="1.0" layoutY="109.0" prefHeight="685.0" prefWidth="846.0">
+                  <Pane fx:id="tblViewCustomerEmployee" layoutX="1.0" layoutY="109.0" prefHeight="685.0" prefWidth="846.0" visible="false">
                      <children>
                         <TableView fx:id="tblViewCustomerEmployeeTableView" prefHeight="650.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                           <columns>
-                            <TableColumn fx:id="columnCustomerEmployeeName" prefWidth="233.0" text="Full Name" />
-                            <TableColumn fx:id="columnCustomerEmployeePhoneNr" prefWidth="136.0" text="Phone" />
+                            <TableColumn fx:id="columnCustomerEmployeeName" prefWidth="134.0" text="CPR-NR" />
+                            <TableColumn fx:id="columnCustomerEmployeePhoneNr" prefWidth="235.0" text="Full Name" />
                               <TableColumn fx:id="columnCustomerEmployeeMail" prefWidth="140.0" text="E-mail" />
-                              <TableColumn fx:id="columnCustomerEmployeeCPRNR" prefWidth="173.0" text="CPR-NR" />
+                              <TableColumn fx:id="columnCustomerEmployeeCPRNR" prefWidth="173.0" text="Phone Nr" />
                               <TableColumn fx:id="columnCustomerEmployeeCVRNR" prefWidth="163.0" text="CVR-NR" />
                           </columns>
                         </TableView>
@@ -256,7 +256,7 @@
                   </Pane>
                </children>
             </Pane>
-            <Pane fx:id="paneManageLogins" prefHeight="795.0" prefWidth="846.0" visible="false">
+            <Pane fx:id="paneManageLogins" prefHeight="795.0" prefWidth="846.0">
                <children>
                   <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Logins" textAlignment="CENTER">
                      <font>
@@ -278,7 +278,7 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnManageLoginsRemove" alignment="CENTER" layoutX="635.0" layoutY="64.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="211.5" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="Remove Login">
+                  <Button fx:id="btnManageLoginsRemove" alignment="CENTER" layoutX="635.0" layoutY="64.0" mnemonicParsing="false" onAction="#deleteLogIn" prefHeight="40.0" prefWidth="211.5" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="Remove Login">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -295,13 +295,13 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Pane fx:id="tblViewManageLogins" layoutY="104.0" prefHeight="690.0" prefWidth="846.0" visible="false">
+                  <Pane fx:id="tblViewManageLogins" layoutY="104.0" prefHeight="690.0" prefWidth="846.0">
                      <children>
-                        <TableView layoutY="5.0" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                        <TableView fx:id="tblViewLoogins" layoutY="5.0" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                           <columns>
-                            <TableColumn prefWidth="312.0" text="Username" />
-                            <TableColumn prefWidth="320.0" text="Password" />
-                              <TableColumn prefWidth="213.0" text="Person ID" />
+                            <TableColumn fx:id="columnLoginsUsername" prefWidth="312.0" text="Username" />
+                            <TableColumn fx:id="columnLoginsPassword" prefWidth="320.0" text="Password" />
+                              <TableColumn fx:id="columnLoginsPersonID" prefWidth="213.0" text="Person ID" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnManageLoginsExport" alignment="CENTER" layoutY="650.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-width: 2; -fx-border-color: black;" text="Export CSV File" />

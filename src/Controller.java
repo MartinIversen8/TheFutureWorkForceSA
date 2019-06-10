@@ -43,16 +43,22 @@ public class Controller implements Initializable {
     @FXML
     private DatePicker dpEducationStartDate,dpEducationEndDate;
     @FXML
-    private TableView<EducationPlans> tblViewEducationPlans,tblViewCustomerEmployeeTableView;
-
+    private TableView<EducationPlans> tblViewEducationPlans;
+    @FXML
+    private TableView<CustomerEmployees> tblViewCustomerEmployeeTableView;
+    @FXML
+    private TableView<LogIns> tblViewLoogins;
     @FXML
     private TableColumn<ObservableList<String>, String> fullName,cprNr,company,provider,priority,startDate,endDate,epID,AMU,cours,mail;
     @FXML
-    private TableColumn<ObservableList<String>,String> columnCustomerEmployeeName,columnCustomerEmployeePhoneNr,columnCustomerEmployeeMail,columnCustomerEmployeeCPRNR,columnCustomerEmployeeCVRNR;
+    private TableColumn<ObservableList<String>,String> columnCustomerEmployeeName,columnCustomerEmployeePhoneNr,columnCustomerEmployeeMail,columnCustomerEmployeeCPRNR,columnCustomerEmployeeCVRNR,columnLoginsUsername,
+            columnLoginsPassword,columnLoginsPersonID;
     @FXML
     private ListView<String> listView;
 
     ObservableList<EducationPlans> epList = FXCollections.observableArrayList(new ArrayList<>());
+    ObservableList<CustomerEmployees> cusEmpList = FXCollections.observableArrayList(new ArrayList<>());
+    ObservableList<LogIns> logInsList = FXCollections.observableArrayList(new ArrayList<>());
 private int index;
 
 
@@ -303,6 +309,7 @@ private int index;
     {
         tblViewCustomerEmployee.setVisible(true);
         paneCustomerEmployeeAddAndEdit.setVisible(false);
+        viewCustomerEmployees();
     }
     // End of the Customer Employee
 
@@ -323,6 +330,7 @@ private int index;
     {
         tblViewManageLogins.setVisible(true);
         paneManageLoginsCreateAndEdit.setVisible(false);
+        viewLogins();
     }
     @FXML
     private void showPaneManageLoginsCreateAndEdit(ActionEvent event)
@@ -465,8 +473,8 @@ private int index;
         }
     }
 
-    @FXML
-    private void viewCustomerEmployees(ActionEvent event)
+
+    private void viewCustomerEmployees()
     {
         int counter = 0;
         ObservableList<String> row = FXCollections.observableArrayList();
@@ -475,12 +483,11 @@ private int index;
 
             ResultSet rs = DB.createProcResultset("execute view_cusEmps");
 
-            columnCustomerEmployeeCPRNR.setCellValueFactory(new PropertyValueFactory<>("cprNr"));
-            columnCustomerEmployeeCVRNR.setCellValueFactory(new PropertyValueFactory<>("companyCVRNR"));
-            columnCustomerEmployeeMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
             columnCustomerEmployeeName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             columnCustomerEmployeePhoneNr.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
-
+            columnCustomerEmployeeMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
+            columnCustomerEmployeeCPRNR.setCellValueFactory(new PropertyValueFactory<>("cprNr"));
+            columnCustomerEmployeeCVRNR.setCellValueFactory(new PropertyValueFactory<>("companyCVRNR"));
 
             while (rs.next()) {
 
@@ -490,20 +497,67 @@ private int index;
             }
 
             for (int i = 0; i <row.size()/5 ; i++) {
-                CustomerEmployees cus = new CustomerEmployees(row.get(i+counter), row.get(i+counter+1), row.get(i+counter+2), row.get(i+counter+3), row.get(i+counter+4));
-                System.out.println("ep2 "+cus.toString());
-                System.out.println(tblViewCustomerEmployeeTableView.getColumns());
-                epList.add(cus);
+                CustomerEmployees cusEmp = new CustomerEmployees(row.get(i+counter), row.get(i+counter+1), row.get(i+counter+2), row.get(i+counter+3), row.get(i+counter+4));
+                cusEmpList.add(cusEmp);
                 counter+=4;
 
             }
-            tblViewCustomerEmployeeTableView.setItems(epList);
+            tblViewCustomerEmployeeTableView.setItems(cusEmpList);
 
 
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error on Building Data");
         }
+    }
+
+
+
+    private void viewLogins ()
+    {
+        int counter = 0;
+        ObservableList<String> row = FXCollections.observableArrayList();
+        tblViewLoogins.getItems().clear();
+        try {
+
+            ResultSet rs = DB.createProcResultset("execute view_logins");
+            columnLoginsUsername.setCellValueFactory(new PropertyValueFactory<>("userName"));
+            columnLoginsPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+            columnLoginsPersonID.setCellValueFactory(new PropertyValueFactory<>("personID"));
+
+            while (rs.next()) {
+
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    row.add(rs.getString(i));
+                }
+            }
+
+            for (int i = 0; i <row.size()/3 ; i++) {
+                LogIns logIns = new LogIns(row.get(i+counter), row.get(i+counter+1), row.get(i+counter+2));
+                logInsList.add(logIns);
+                counter+=2;
+
+            }
+            tblViewLoogins.setItems(logInsList);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
+    }
+    @FXML
+    private void deleteLogIn (ActionEvent event)
+    {
+        index = tblViewLoogins.getSelectionModel().getFocusedIndex();
+        String password = tblViewLoogins.getItems().get(index).getPassword();
+
+        System.out.println(password);
+
+        DB.deleteSQL("delete from tbl_Log_In where fld_Password = '"+password+"'");
+
+        viewLogins();
+
     }
 
 }
