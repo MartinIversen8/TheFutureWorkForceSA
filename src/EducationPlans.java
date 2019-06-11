@@ -6,7 +6,7 @@ public class EducationPlans {
     private StringProperty fullName;
     private StringProperty AMU;
     private StringProperty epID;
-    private StringProperty cours;
+    private StringProperty course;
     private StringProperty priority;
     private StringProperty mail;
     private StringProperty startDate;
@@ -43,11 +43,11 @@ public class EducationPlans {
         return epID;
     }
 
-    public void setCours(String value) { coursProperty().set(value); }
-    public String getCours() { return coursProperty().get(); }
-    public StringProperty coursProperty() {
-        if (cours == null) cours = new SimpleStringProperty(this, "cours");
-        return cours;
+    public void setCourse(String value) { courseProperty().set(value); }
+    public String getCourse() { return courseProperty().get(); }
+    public StringProperty courseProperty() {
+        if (course == null) course = new SimpleStringProperty(this, "course");
+        return course;
     }
 
     public void setPriority(String value) { priorityProperty().set(value); }
@@ -86,10 +86,10 @@ public class EducationPlans {
     }
 
 
-    public EducationPlans(String epID,String AMU,String cours,String fullName,String priority,String mail,String startDate,String endDate,String company,String cprNr) {
+    public EducationPlans(String epID,String AMU,String course,String fullName,String priority,String mail,String startDate,String endDate,String company,String cprNr) {
         this.setEpID(epID);
         this.setAMU(AMU);
-        this.setCours(cours);
+        this.setCourse(course);
         this.setName(fullName);
         this.setPriority(priority);
         this.setMail(mail);
