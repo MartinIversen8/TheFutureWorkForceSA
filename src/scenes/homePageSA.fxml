@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-border-color: Black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminController">
+<BorderPane maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-border-color: Black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <center>
         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;" BorderPane.alignment="CENTER">
             <children>
@@ -67,7 +67,7 @@
                         </Pane>
                         <Pane fx:id="panetblViewEducation" layoutX="1.0" layoutY="112.0" prefHeight="685.0" prefWidth="846.0" visible="false">
                             <children>
-                                <TableView fx:id="panetblViewEducation" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                <TableView fx:id="tblViewEducation" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                                     <columns>
                                         <TableColumn fx:id="tblColumnEducationID" prefWidth="43.0" text="ID" />
                                         <TableColumn fx:id="tblColumnEducationFullName" prefWidth="161.0" text="Full name" />
@@ -104,14 +104,14 @@
                   </Pane>
                     </children>
                 </Pane>
-                <Pane fx:id="paneCoursesAndProviders" prefHeight="796.0" prefWidth="846.0" visible="false">
+                <Pane fx:id="paneCoursesAndProviders" prefHeight="796.0" prefWidth="846.0">
                     <children>
                         <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Courses and Providers">
                             <font>
                                 <Font name="System Bold" size="20.0" />
                             </font>
                         </Label>
-                        <Button fx:id="btnCoursesView" layoutY="64.0" mnemonicParsing="false" onAction="#btnViewCourses" prefHeight="40.0" prefWidth="211.5" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="View Courses">
+                        <Button fx:id="btnCoursesView" layoutY="64.0" maxHeight="40.0" mnemonicParsing="false" onAction="#btnViewCourses" prefHeight="40.0" prefWidth="212.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="View Courses">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -131,41 +131,99 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Pane fx:id="paneCoursesAndProvidersAddAndEdit" layoutY="111.0" prefHeight="685.0" prefWidth="846.0" style="-fx-background-color: #CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                        <Button fx:id="btnProvidersView" layoutY="112.0" maxHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="212.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="View Providers">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnProvidersAdd" layoutX="212.0" layoutY="112.0" maxHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="212.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="Add Providers">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnProvidersEdit" layoutX="423.0" layoutY="112.0" maxHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="212.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="Edit Providers">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnProvidersRemove" layoutX="635.0" layoutY="112.0" maxHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="212.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="Remove Providers">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Pane fx:id="paneCoursesAdd" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" style="-fx-background-color: #CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
                             <children>
-                                <TextField fx:id="tfCourseAndProvidersCourseTitle" alignment="CENTER" layoutX="90.0" layoutY="94.0" prefHeight="40.0" prefWidth="250.0" promptText="Course Title" style="-fx-border-color: black; -fx-border-width: 2;" />
-                                <TextField fx:id="tfCourseAndProvidersNumberOfDays" alignment="CENTER" layoutX="464.0" layoutY="94.0" prefHeight="40.0" prefWidth="250.0" promptText="Number of Days" style="-fx-border-color: black; -fx-border-width: 2;" />
-                                <TextArea fx:id="taCoursesAndProvidersCourseDescription" layoutX="90.0" layoutY="217.0" prefHeight="350.0" prefWidth="624.0" promptText="Course Description" style="-fx-border-color: black; -fx-border-width: 2;" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="277.0" layoutY="607.0" mnemonicParsing="false" onAction="#createNewCourse" prefHeight="40.0" prefWidth="250.0" style="-fx-border-color: black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
+                                <TextField fx:id="tfCourseAddPaneCourseTitle" alignment="CENTER" layoutX="90.0" layoutY="62.0" prefHeight="40.0" prefWidth="250.0" promptText="Course Title" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfCourseAddPaneNumberOfDays" alignment="CENTER" layoutX="464.0" layoutY="62.0" prefHeight="40.0" prefWidth="250.0" promptText="Number of Days" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextArea fx:id="taCoursesAddPaneCourseDescription" layoutX="90.0" layoutY="157.0" prefHeight="350.0" prefWidth="624.0" promptText="Course Description" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="277.0" layoutY="551.0" mnemonicParsing="false" onAction="#createNewCourse" prefHeight="40.0" prefWidth="250.0" style="-fx-border-color: black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
                                     <font>
                                         <Font size="20.0" />
                                     </font>
                                 </Button>
                             </children>
                         </Pane>
-                        <Pane fx:id="panetblViewCoursesAndProviders" layoutY="112.0" prefHeight="685.0" prefWidth="846.0" visible="false">
+                        <Pane fx:id="panetblViewCourses" layoutX="1.0" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" visible="false">
                             <children>
-                                <TableView fx:id="panetblViewCoursesAndProviders" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                <TableView fx:id="tblViewCourses" prefHeight="595.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                                     <columns>
-                                        <TableColumn fx:id="tblColumnCourseTitle" prefWidth="421.0" text="Course title" />
-                                        <TableColumn fx:id="tblColumnCourseProvider" prefWidth="424.0" text="Course Provider" />
+                                        <TableColumn fx:id="tblColumnCourseAMU" prefWidth="135.0" text="AMU NR." />
+                                        <TableColumn fx:id="tblColumnCourseTitle" prefWidth="231.0" text="Course title" />
+                                        <TableColumn fx:id="tblColumnCourseDescription" prefWidth="375.0" text="Course Description" />
+                                        <TableColumn fx:id="tblColumnCourseNRofDays" prefWidth="102.0" text="NR. of Days" />
                                     </columns>
                                 </TableView>
-                                <Button fx:id="btnCourseAndProvidersExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                                <Button fx:id="btnCourseExport" alignment="CENTER" layoutY="595.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
                             </children>
                         </Pane>
-                  <Pane fx:id="paneCoursesAndProvidersAddAndEdit1" layoutX="1.0" layoutY="112.0" prefHeight="685.0" prefWidth="846.0" style="-fx-background-color: #CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
-                     <children>
-                        <TextField fx:id="tfCourseAndProvidersCourseTitle1" alignment="CENTER" layoutX="90.0" layoutY="94.0" prefHeight="40.0" prefWidth="250.0" promptText="Course Title" style="-fx-border-color: black; -fx-border-width: 2;" />
-                        <TextField fx:id="tfCourseAndProvidersNumberOfDays1" alignment="CENTER" layoutX="464.0" layoutY="94.0" prefHeight="40.0" prefWidth="250.0" promptText="Number of Days" style="-fx-border-color: black; -fx-border-width: 2;" />
-                        <TextArea fx:id="taCoursesAndProvidersCourseDescription1" layoutX="90.0" layoutY="217.0" prefHeight="350.0" prefWidth="624.0" promptText="Course Description" style="-fx-border-color: black; -fx-border-width: 2;" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="277.0" layoutY="607.0" mnemonicParsing="false" onAction="#createNewCourse" prefHeight="40.0" prefWidth="250.0" style="-fx-border-color: black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
+                        <Pane fx:id="paneCoursesEdit" layoutX="1.0" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" style="-fx-background-color: #CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                            <children>
+                                <TextField fx:id="tfCourseEditPaneCourseTitle" alignment="CENTER" layoutX="90.0" layoutY="62.0" prefHeight="40.0" prefWidth="250.0" promptText="Course Title" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfCourseEditPaneNumberOfDays" alignment="CENTER" layoutX="464.0" layoutY="62.0" prefHeight="40.0" prefWidth="250.0" promptText="Number of Days" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextArea fx:id="taCoursesEditPaneCourseDescription" layoutX="90.0" layoutY="157.0" prefHeight="350.0" prefWidth="624.0" promptText="Course Description" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="277.0" layoutY="551.0" mnemonicParsing="false" onAction="#createNewCourse" prefHeight="40.0" prefWidth="250.0" style="-fx-border-color: black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="panetblViewProviders" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" style="-fx-background-color: CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                            <children>
+                                <Button fx:id="btnProviderExport" alignment="CENTER" layoutY="595.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                                <TableView fx:id="tblViewProvider" prefHeight="595.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                    <columns>
+                                        <TableColumn fx:id="tblColumnProviderName" prefWidth="332.0" text="Name" />
+                                        <TableColumn fx:id="tblColumnProviderAddress" prefWidth="300.0" text="Address" />
+                                        <TableColumn fx:id="tblColumnProviderZipcode" prefWidth="211.0" text="Zipcode" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="paneProvidersEdit" layoutX="1.0" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" style="-fx-background-color: CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                            <children>
+                                <TextField fx:id="tfProvidersEditPaneName" alignment="CENTER" layoutX="104.0" layoutY="122.0" prefHeight="40.0" prefWidth="250.0" promptText="Name" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfProvidersEditPaneAddress" alignment="CENTER" layoutX="462.0" layoutY="122.0" prefHeight="40.0" prefWidth="250.0" promptText="Address" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfProvidersEditPaneZipcode" alignment="CENTER" layoutX="104.0" layoutY="224.0" prefHeight="40.0" prefWidth="250.0" promptText="Zipcode" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="298.0" layoutY="490.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-border-color: black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="paneProvidersAdd" layoutX="1.0" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" style="-fx-background-color: CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                            <children>
+                                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="298.0" layoutY="490.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-border-color: black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Button>
+                                <TextField fx:id="tfProvidersAddPaneName" alignment="CENTER" layoutX="104.0" layoutY="122.0" prefHeight="40.0" prefWidth="250.0" promptText="Name" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfProvidersAddPaneAddress" alignment="CENTER" layoutX="464.0" layoutY="122.0" prefHeight="40.0" prefWidth="250.0" promptText="Address" style="-fx-border-color: black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfProvidersAddPaneZipcode" alignment="CENTER" layoutX="104.0" layoutY="224.0" prefHeight="40.0" prefWidth="250.0" promptText="Zipcode" style="-fx-border-color: black; -fx-border-width: 2;" />
+                            </children>
+                        </Pane>
                     </children>
                 </Pane>
                 <Pane fx:id="paneCustomerCompanies" prefHeight="796.0" prefWidth="846.0" style="-fx-border-color: Black; -fx-border-width: 2;" visible="false">
@@ -212,7 +270,7 @@
                         </Pane>
                         <Pane fx:id="panetblViewCustomerCompanies" layoutY="112.0" prefHeight="685.0" prefWidth="846.0" visible="false">
                             <children>
-                                <TableView fx:id="panetblViewCustomerCompanies" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                <TableView fx:id="tblViewCustomerCompanies" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                                     <columns>
                                         <TableColumn fx:id="tblColumnCompaniesCVRNR" prefWidth="101.0" text="CVR-NR." />
                                         <TableColumn fx:id="tblColumnCompaniesName" prefWidth="139.0" text="Name" />
@@ -285,7 +343,7 @@
                         </Pane>
                         <Pane fx:id="panetblViewCustomerEmployee" layoutX="1.0" layoutY="109.0" prefHeight="685.0" prefWidth="846.0" visible="false">
                             <children>
-                                <TableView fx:id="panetblViewCustomerEmployee" prefHeight="650.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                <TableView fx:id="tblViewCustomerEmployee" prefHeight="650.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                                     <columns>
                                         <TableColumn fx:id="tblColumnEmployeeFullName" prefWidth="233.0" text="Full Name" />
                                         <TableColumn fx:id="tblColumnEmployeePhone" prefWidth="136.0" text="Phone" />
@@ -354,7 +412,7 @@
                         </Pane>
                         <Pane fx:id="panetblViewManageLogins" layoutY="104.0" prefHeight="690.0" prefWidth="846.0" visible="false">
                             <children>
-                                <TableView fx:id="panetblViewManageLogins" layoutY="5.0" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                <TableView fx:id="tblViewManageLogins" layoutY="5.0" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                                     <columns>
                                         <TableColumn fx:id="tblColumnLoginsUsername" prefWidth="312.0" text="Username" />
                                         <TableColumn fx:id="tblColumnLoginsPassword" prefWidth="320.0" text="Password" />

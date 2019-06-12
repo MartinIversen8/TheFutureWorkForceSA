@@ -13,6 +13,7 @@ public class EducationPlans {
     private StringProperty endDate;
     private StringProperty company;
     private StringProperty cprNr;
+    private StringProperty provider;
 
 
     public void setCprNr(String value) { cprNrProperty().set(value); }
@@ -20,6 +21,13 @@ public class EducationPlans {
     public StringProperty cprNrProperty() {
         if (cprNr == null) cprNr = new SimpleStringProperty(this, "cprNr");
         return cprNr;
+    }
+
+    public void setProvider(String value) { providerProperty().set(value); }
+    public String getProvider() { return providerProperty().get(); }
+    public StringProperty providerProperty() {
+        if (provider == null) provider = new SimpleStringProperty(this, "provider");
+        return provider;
     }
 
     public void setName(String value) { fullNameProperty().set(value); }
@@ -86,7 +94,7 @@ public class EducationPlans {
     }
 
 
-    public EducationPlans(String epID,String AMU,String course,String fullName,String priority,String mail,String startDate,String endDate,String company,String cprNr) {
+    public EducationPlans(String epID,String AMU,String course,String fullName,String priority,String mail,String startDate,String endDate,String company,String cprNr,String provider) {
         this.setEpID(epID);
         this.setAMU(AMU);
         this.setCourse(course);
@@ -97,6 +105,7 @@ public class EducationPlans {
         this.setEndDate(endDate);
         this.setCompany(company);
         this.setCprNr(cprNr);
+        this.setProvider(provider);
     }
 
 

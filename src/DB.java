@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+import javax.sql.rowset.serial.SQLOutputImpl;
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class DB {
             con = DriverManager.getConnection("jdbc:sqlserver://localhost:"+port+";databaseName="+databaseName,userName,password);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+
         }
 
     }
@@ -110,6 +112,7 @@ public class DB {
         }catch (Exception e){
             System.err.println("Error in the sql parameter, please test this in SQLServer first");
             System.err.println(e.getMessage());
+
         }
     }
     /**
