@@ -31,7 +31,8 @@ public class AdminController implements Initializable {
     ,tfCustomerEmployeesName,tfCustomerEmployeesPhone,tfCustomerEmployeesCPR,tfCustomerEmployeesCVR,tfCustomerEmployeesEmail,tfEducationCustomerEmployeeName2,tfEducationCprNr2,tfEducationSmartAcademyEmployeeID2,tfEducationAmuNR2
     ,tfEducationCustomerCompanyName2,tfEducationPriority2,tfEducationProvider2,tfManageLoginsEditPassword,tfManageLoginsEditUsername,tfManageLoginsEditPersonID
     ,tfCourseEditPaneCourseTitle,tfCourseEditPaneNumberOfDays,tfProvidersAddPaneName,tfProvidersAddPaneAddress, tfProvidersAddPaneZipcode,
-    tfProvidersEditPaneName, tfProvidersEditPaneAddress, tfProvidersEditPaneZipcode,tfProvidersAddPaneCity,tfCustomerEmployeesEmailEdit,tfCustomerEmployeesCVREdit,tfCustomerEmployeesCPREdit,tfCustomerEmployeesPhoneEdit,tfCustomerEmployeesNameEdit;
+    tfProvidersEditPaneName, tfProvidersEditPaneAddress, tfProvidersEditPaneZipcode,tfProvidersAddPaneCity,tfCustomerEmployeesEmailEdit,tfCustomerEmployeesCVREdit,tfCustomerEmployeesCPREdit,tfCustomerEmployeesPhoneEdit,tfCustomerEmployeesNameEdit
+    ,tfCustomerCompaniesCVRNREdit,tfCustomerCompaniesNameEdit,tfCustomerCompaniesPhoneEdit,tfCustomerCompaniesEmailEdit,tfCustomerCompaniesAddressEdit,tfCustomerCompaniesZipcodeEdit;
 
     @FXML
     private TextArea taCoursesAddPaneCourseDescription,taCoursesEditPaneCourseDescription;
@@ -497,6 +498,7 @@ private int index;
     {
         panetblViewCustomerCompanies.setVisible(true);
         paneCustomerCompaniesAddAndEdit.setVisible(false);
+        paneCustomerCompaniesEdit.setVisible(false);
         viewCustomerCompanies();
     }
 
@@ -505,6 +507,7 @@ private int index;
     {
         panetblViewCustomerCompanies.setVisible(false);
         paneCustomerCompaniesAddAndEdit.setVisible(true);
+        paneCustomerCompaniesEdit.setVisible(false);
     }
 
     @FXML
@@ -513,6 +516,39 @@ private int index;
         paneCustomerCompaniesEdit.setVisible(true);
         panetblViewCustomerCompanies.setVisible(false);
         paneCustomerCompaniesAddAndEdit.setVisible(false);
+
+        index = tblViewCustomerCompanies.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        if(index>=0){
+            tfCustomerCompaniesAddressEdit.setText(tblViewCustomerCompanies.getItems().get(index).getAddress());
+            tfCustomerCompaniesCVRNREdit.setText(tblViewCustomerCompanies.getItems().get(index).getCvrNr());
+            tfCustomerCompaniesEmailEdit.setText(tblViewCustomerCompanies.getItems().get(index).getCustomerMail());
+            tfCustomerCompaniesNameEdit.setText(tblViewCustomerCompanies.getItems().get(index).getcustomerCompanyName());
+            tfCustomerCompaniesPhoneEdit.setText(tblViewCustomerCompanies.getItems().get(index).getPhoneNr());
+            tfCustomerCompaniesZipcodeEdit.setText(tblViewCustomerCompanies.getItems().get(index).getZipcode());
+
+        }
+
+    }
+    @FXML
+    private void updateCustomerCompanies()
+    {
+        String address = tfCustomerCompaniesAddressEdit.getText();
+        String cvrNR = tfCustomerCompaniesCVRNREdit.getText();
+        String mail = tfCustomerCompaniesEmailEdit.getText();
+        String name = tfCustomerCompaniesNameEdit.getText();
+        String phone = tfCustomerCompaniesPhoneEdit.getText();
+        String zipcode = tfCustomerCompaniesZipcodeEdit.getText();
+        index = tblViewCustomerCompanies.getSelectionModel().getFocusedIndex();
+        String companyCVR = tblViewCustomerCompanies.getItems().get(index).getCvrNr();
+        DB.updateSQL("update tbl_Customer set fld_CVR_NR = '"+cvrNR+"',fld_Name_Cos = '"+name+"',fld_Phone_Nr = '"+phone+"',fld_Cos_Email = '"+mail+"',fld_Cos_Address = '"+address+"',fld_Zipcode = '"+zipcode+"' where fld_CVR_NR='"+companyCVR+"' ");
+
+        tfCustomerCompaniesAddressEdit.setText("");
+        tfCustomerCompaniesCVRNREdit.setText("");
+        tfCustomerCompaniesEmailEdit.setText("");
+        tfCustomerCompaniesNameEdit.setText("");
+        tfCustomerCompaniesPhoneEdit.setText("");
+        tfCustomerCompaniesZipcodeEdit.setText("");
+
 
     }
 
