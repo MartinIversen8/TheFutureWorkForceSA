@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-border-color: Black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CustomerController">
+    <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;" BorderPane.alignment="CENTER">
+            <children>
+                <Pane fx:id="paneEducationPlans" prefHeight="796.0" prefWidth="846.0" visible="false">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Education Plans">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btnEducationView" alignment="CENTER" layoutY="64.0" mnemonicParsing="false" onAction="#showEducationPlans" prefHeight="40.0" prefWidth="423.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="View Plans" textAlignment="CENTER">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnEducationEdit" alignment="CENTER" layoutX="423.0" layoutY="64.0" mnemonicParsing="false" onAction="#editEducationPlan" prefHeight="40.0" prefWidth="423.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="Edit Plans" textAlignment="CENTER">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Pane fx:id="paneEducationPlansEdit" layoutY="112.0" prefHeight="684.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #CEE3F6;" visible="false">
+                            <children>
+                                <TextField fx:id="tfEducationPriority" alignment="CENTER" layoutX="273.0" layoutY="220.0" prefHeight="40.0" prefWidth="250.0" promptText="Priority" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                                <Button fx:id="btnEducationOK" alignment="CENTER" layoutX="375.0" layoutY="507.0" mnemonicParsing="false" onAction="#updateEducationPlan" prefHeight="45.0" prefWidth="65.0" style="-fx-border-color: Black; -fx-border-width: 2;" text="OK" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="panetblViewEducation" layoutX="1.0" layoutY="112.0" prefHeight="685.0" prefWidth="846.0" visible="false">
+                            <children>
+                                <Button fx:id="btnEducationExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                        <TableView fx:id="tblViewEducationPlans" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                           <columns>
+                              <TableColumn fx:id="tblColumnEducationID" prefWidth="43.0" text="ID" />
+                              <TableColumn fx:id="tblColumnEducationFullName" prefWidth="76.0" text="Full name" />
+                              <TableColumn fx:id="tblColumnEducationAMU" prefWidth="72.0" text="AMU" />
+                              <TableColumn fx:id="tblColumnEducationCourse" text="Course title" />
+                              <TableColumn fx:id="tblColumnEducationCPRNR" prefWidth="64.0" text="CPR-NR" />
+                              <TableColumn fx:id="tblColumnEducationProvider" prefWidth="76.0" text="Provider" />
+                              <TableColumn fx:id="tblColumnEducationPriority" prefWidth="48.0" text="Priority" />
+                              <TableColumn fx:id="tblColumnEducationStartDate" prefWidth="74.0" text="Start Date" />
+                              <TableColumn fx:id="tblColumnEducationEndDate" prefWidth="72.0" text="End Date" />
+                              <TableColumn fx:id="tblColumnEducationMail" prefWidth="104.0" text="E-mail" />
+                              <TableColumn fx:id="tblColumnEducationCompany" prefWidth="134.0" text="Company" />
+                           </columns>
+                        </TableView>
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+                <Pane fx:id="paneCoursesAndProviders" prefHeight="796.0" prefWidth="846.0" visible="false">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Courses and Providers">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btnCoursesView" layoutY="64.0" maxHeight="48.0" mnemonicParsing="false" onAction="#btnViewCourses" prefHeight="48.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="View Courses">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnProvidersView" layoutY="112.0" maxHeight="48.0" mnemonicParsing="false" onAction="#showViewProviders" prefHeight="48.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #A9A9F5;" text="View Providers">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Pane fx:id="panetblViewCourses" layoutX="1.0" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" visible="false">
+                            <children>
+                                <TableView fx:id="tblViewCourses" prefHeight="595.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                    <columns>
+                                        <TableColumn fx:id="tblColumnCourseAMU" prefWidth="135.0" text="AMU NR." />
+                                        <TableColumn fx:id="tblColumnCourseTitle" prefWidth="231.0" text="Course title" />
+                                        <TableColumn fx:id="tblColumnCourseDescription" prefWidth="375.0" text="Course Description" />
+                                        <TableColumn fx:id="tblColumnCourseNRofDays" prefWidth="102.0" text="NR. of Days" />
+                                    </columns>
+                                </TableView>
+                                <Button fx:id="btnCourseExport" alignment="CENTER" layoutY="595.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                            </children>
+                        </Pane>
+                        <Pane fx:id="panetblViewProviders" layoutY="160.0" prefHeight="635.0" prefWidth="846.0" style="-fx-background-color: CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                            <children>
+                                <Button fx:id="btnProviderExport" alignment="CENTER" layoutY="595.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                                <TableView fx:id="tblViewProvider" prefHeight="595.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                    <columns>
+                                        <TableColumn fx:id="tblColumnProviderName" prefWidth="332.0" text="Name" />
+                                        <TableColumn fx:id="tblColumnProviderAddress" prefWidth="300.0" text="Address" />
+                                        <TableColumn fx:id="tblColumnProviderZipcode" prefWidth="211.0" text="Zipcode" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+                <Pane fx:id="paneCustomerEmployee" prefHeight="796.0" prefWidth="846.0" visible="false">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Customer Employee" textAlignment="CENTER">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btnCustomerEmployeeView" alignment="CENTER" layoutY="64.0" mnemonicParsing="false" onAction="#showTblViewEmpolyees" prefHeight="40.0" prefWidth="211.5" style="-fx-background-color: #A9A9F5; -fx-border-color: Black; -fx-border-width: 2;" text="View Employees">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnCustomerEmployeeAdd" alignment="CENTER" layoutX="212.0" layoutY="64.0" mnemonicParsing="false" onAction="#showAddEmployee" prefHeight="40.0" prefWidth="211.5" style="-fx-background-color: #A9A9F5; -fx-border-color: Black; -fx-border-width: 2;" text="Add Employee">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnCustomerEmployeeEdit" alignment="CENTER" layoutX="423.0" layoutY="64.0" mnemonicParsing="false" onAction="#showEditEmployee" prefHeight="40.0" prefWidth="211.5" style="-fx-background-color: #A9A9F5; -fx-border-color: Black; -fx-border-width: 2;" text="Edit Employee">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnCustomerEmployeeRemove" alignment="CENTER" layoutX="634.0" layoutY="64.0" mnemonicParsing="false" onAction="#deleteCustomerEmployee" prefHeight="40.0" prefWidth="211.5" style="-fx-background-color: #A9A9F5; -fx-border-color: Black; -fx-border-width: 2;" text="Remove Employee">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Pane fx:id="paneCustomerEmployeeAdd" layoutY="112.0" prefHeight="690.0" prefWidth="846.0" style="-fx-background-color: #CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                            <children>
+                                <TextField fx:id="tfCustomerEmployeesName" alignment="CENTER" layoutX="97.0" layoutY="102.0" prefHeight="40.0" prefWidth="250.0" promptText="Full Name" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfCustomerEmployeesPhone" alignment="CENTER" layoutX="452.0" layoutY="102.0" prefHeight="40.0" prefWidth="250.0" promptText="Phone NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfCustomerEmployeesCPR" alignment="CENTER" layoutX="97.0" layoutY="184.0" prefHeight="40.0" prefWidth="250.0" promptText="CPR-NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfCustomerEmployeesCVR" alignment="CENTER" layoutX="452.0" layoutY="184.0" prefHeight="40.0" prefWidth="250.0" promptText="CVR-NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                                <TextField fx:id="tfCustomerEmployeesEmail" alignment="CENTER" layoutX="97.0" layoutY="265.0" prefHeight="40.0" prefWidth="250.0" promptText="E-mail" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                                <Button fx:id="btnCustomerEmployeesOK" layoutX="379.0" layoutY="507.0" mnemonicParsing="false" onAction="#createNewCustomerEmployee" prefHeight="45.0" prefWidth="65.0" style="-fx-border-color: Black; -fx-border-width: 2;" text="OK">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </Pane>
+                  <Pane fx:id="paneCustomerEmployeeEdit" layoutY="107.0" prefHeight="690.0" prefWidth="846.0" style="-fx-background-color: #CEE3F6; -fx-border-color: black; -fx-border-width: 2;" visible="false">
+                     <children>
+                        <TextField fx:id="tfCustomerEmployeesNameEdit" alignment="CENTER" layoutX="97.0" layoutY="102.0" prefHeight="40.0" prefWidth="250.0" promptText="Full Name" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                        <TextField fx:id="tfCustomerEmployeesPhoneEdit" alignment="CENTER" layoutX="452.0" layoutY="102.0" prefHeight="40.0" prefWidth="250.0" promptText="Phone NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                        <TextField fx:id="tfCustomerEmployeesCPREdit" alignment="CENTER" layoutX="97.0" layoutY="184.0" prefHeight="40.0" prefWidth="250.0" promptText="CPR-NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                        <TextField fx:id="tfCustomerEmployeesCVREdit" alignment="CENTER" layoutX="452.0" layoutY="184.0" prefHeight="40.0" prefWidth="250.0" promptText="CVR-NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                        <TextField fx:id="tfCustomerEmployeesEmailEdit" alignment="CENTER" layoutX="97.0" layoutY="265.0" prefHeight="40.0" prefWidth="250.0" promptText="E-mail" style="-fx-border-color: Black; -fx-border-width: 2;" />
+                        <Button fx:id="btnCustomerEmployeesOK1" layoutX="379.0" layoutY="507.0" mnemonicParsing="false" onAction="#updateCustomerEmployees" prefHeight="45.0" prefWidth="65.0" style="-fx-border-color: Black; -fx-border-width: 2;" text="OK">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                        <Pane fx:id="panetblViewCustomerEmployee" layoutX="1.0" layoutY="109.0" prefHeight="685.0" prefWidth="846.0" visible="false">
+                            <children>
+                                <TableView fx:id="tblViewCustomerEmployee" prefHeight="650.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
+                                    <columns>
+                                        <TableColumn fx:id="tblColumnCustomerEmployeeName" prefWidth="233.0" text="Full Name" />
+                                        <TableColumn fx:id="tblColumnCustomerEmployeePhoneNr" prefWidth="136.0" text="Phone" />
+                                        <TableColumn fx:id="tblColumnCustomerEmployeeMail" prefWidth="140.0" text="E-mail" />
+                                        <TableColumn fx:id="tblColumnCustomerEmployeeCPRNR" prefWidth="173.0" text="CPR-NR" />
+                                        <TableColumn fx:id="tblColumnCustomerEmployeeCVRNR" prefWidth="163.0" text="CVR-NR" />
+                                    </columns>
+                                </TableView>
+                                <Button fx:id="btnCustomerEmployeeExport" layoutY="645.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+    </center>
+    <left>
+        <Pane prefHeight="796.0" prefWidth="150.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #81BEF7;" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnEducationPlans" layoutY="46.0" mnemonicParsing="false" onAction="#showBtnEducationPlans" prefHeight="250.33" prefWidth="150.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Manage Education Plans" textAlignment="CENTER" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnCoursesAndProviders" layoutY="296.0" mnemonicParsing="false" onAction="#showBtnCoursesAndProviders" prefHeight="250.33" prefWidth="150.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Manage Courses and Providers" textAlignment="CENTER" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnCustomerEmployees" layoutY="545.0" mnemonicParsing="false" onAction="#showCustomerEmployeePane" prefHeight="250.33" prefWidth="150.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Manage Customer Employees" textAlignment="CENTER" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+                <Label fx:id="labelLoginUsername" alignment="CENTER" contentDisplay="CENTER" layoutY="1.0" prefHeight="45.0" prefWidth="150.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #58FA82;" text="Test Testersen" textAlignment="CENTER" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </left>
+</BorderPane>

@@ -41,20 +41,16 @@ public class LoginController {
             Stage stage;
             Parent root;
             stage = (Stage) btnLogin.getScene().getWindow() ;
-            root= FXMLLoader.load(getClass().getResource("scenes/homePageAdmin.fxml"));
+            root= FXMLLoader.load(getClass().getResource("UI/scenes/homePageAdmin.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-            // fix it
-            System.out.println(personID);
-
-
         }
         else if((userName.equals(userNameData)&& password.equals(passwordData) && personID.equals(smartAcademyEmp))){
             Stage stage;
             Parent root;
             stage = (Stage) btnLogin.getScene().getWindow() ;
-            root= FXMLLoader.load(getClass().getResource("scenes/homePageSA.fxml"));
+            root= FXMLLoader.load(getClass().getResource("UI/scenes/homePageSA.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -63,15 +59,16 @@ public class LoginController {
             Stage stage;
             Parent root;
             stage = (Stage) btnLogin.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("scenes/homePageCustomer.fxml"));
+            root = FXMLLoader.load(getClass().getResource("UI/scenes/homePageCustomer.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }
         else
         {
-            System.out.println("you shall not pass");
+            System.out.println("you shall not pass");// TODO make label that says something went wrong
         }
+        // to avoid pending data error
         getPendingData();
     }
 

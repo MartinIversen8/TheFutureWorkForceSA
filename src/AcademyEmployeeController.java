@@ -2,40 +2,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
-import java.io.*;
-import java.net.URL;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import javafx.scene.control.cell.PropertyValueFactory;
-/**
- *
- * @author Martin Iversen
- * */
 
-public class AdminController implements Initializable {
+public class AcademyEmployeeController {
+
     @FXML
     private Pane paneEducationPlans,paneEducationPlansCreateAndEdit,paneCoursesAndProviders, paneCoursesAdd,
-    paneCustomerCompanies,paneCustomerCompaniesAddAndEdit, paneCustomerEmployeeEdit,paneCustomerEmployeeAdd,paneManageLogins
-            ,paneManageLoginsCreate, panetblViewCourses, panetblViewManageLogins, panetblViewEducation, panetblViewCustomerCompanies, panetblViewCustomerEmployee,
-            paneEducationPlansEdit,paneManageLoginsEdit,paneCoursesEdit,paneProvidersAdd,paneProvidersEdit,panetblViewProviders,paneCustomerEmployee,paneCustomerCompaniesEdit,paneAcademyEmployee
-            ,paneAcademyEmployeeAdd,paneAcademyEmployeeEdit,panetblViewAcademyEmployee;
+            paneCustomerCompanies,paneCustomerCompaniesAddAndEdit, paneCustomerEmployeeEdit,paneCustomerEmployeeAdd
+            , panetblViewCourses, panetblViewManageLogins, panetblViewEducation, panetblViewCustomerCompanies, panetblViewCustomerEmployee,
+            paneEducationPlansEdit,paneCoursesEdit,paneProvidersAdd,paneProvidersEdit,panetblViewProviders,paneCustomerEmployee,paneCustomerCompaniesEdit;
     @FXML
     private TextField tfEducationCustomerEmployeeName,tfEducationCustomerCompanyName,tfEducationPriority,tfEducationCprNr, tfCourseAddPaneCourseTitle,tfCourseAddPaneNumberOfDays,
-    tfCustomerCompaniesCVRNR,tfCustomerCompaniesName,tfCustomerCompaniesEmail,tfCustomerCompaniesZipcode,tfCustomerCompaniesPhone,tfCustomerCompaniesAddress,tfManageLoginsUsername,tfManageLoginsPersonID,tfManageLoginsPassword,tfEducationAmuNR
-    ,tfCustomerEmployeesName,tfCustomerEmployeesPhone,tfCustomerEmployeesCPR,tfCustomerEmployeesCVR,tfCustomerEmployeesEmail,tfEducationCustomerEmployeeName2,tfEducationCprNr2,tfEducationSmartAcademyEmployeeID2,tfEducationAmuNR2
-    ,tfEducationCustomerCompanyName2,tfEducationPriority2,tfEducationProvider2,tfManageLoginsEditPassword,tfManageLoginsEditUsername,tfManageLoginsEditPersonID
-    ,tfCourseEditPaneCourseTitle,tfCourseEditPaneNumberOfDays,tfProvidersAddPaneName,tfProvidersAddPaneAddress, tfProvidersAddPaneZipcode,
-    tfProvidersEditPaneName, tfProvidersEditPaneAddress, tfProvidersEditPaneZipcode,tfProvidersAddPaneCity,tfCustomerEmployeesEmailEdit,tfCustomerEmployeesCVREdit,tfCustomerEmployeesCPREdit,tfCustomerEmployeesPhoneEdit,tfCustomerEmployeesNameEdit
-    ,tfCustomerCompaniesCVRNREdit,tfCustomerCompaniesNameEdit,tfCustomerCompaniesPhoneEdit,tfCustomerCompaniesEmailEdit,tfCustomerCompaniesAddressEdit,tfCustomerCompaniesZipcodeEdit,tfAcademyEmployeesEmailAdd,tfAcademyEmployeesAddressAdd,tfAcademyEmployeesZipcodeAdd
-    ,tfAcademyEmployeesPhoneAdd,tfAcademyEmployeesNameAdd,tfAcademyEmployeesNameEdit,tfAcademyEmployeesPhoneEdit,tfAcademyEmployeesZipcodeEdit,tfAcademyEmployeesAddressEdit,tfAcademyEmployeesEmailEdit;
-
+            tfCustomerCompaniesCVRNR,tfCustomerCompaniesName,tfCustomerCompaniesEmail,tfCustomerCompaniesZipcode,tfCustomerCompaniesPhone,tfCustomerCompaniesAddress,tfEducationAmuNR
+            ,tfCustomerEmployeesName,tfCustomerEmployeesPhone,tfCustomerEmployeesCPR,tfCustomerEmployeesCVR,tfCustomerEmployeesEmail,tfEducationCustomerEmployeeName2,tfEducationCprNr2,tfEducationSmartAcademyEmployeeID2,tfEducationAmuNR2
+            ,tfEducationCustomerCompanyName2,tfEducationPriority2,tfEducationProvider2
+            ,tfCourseEditPaneCourseTitle,tfCourseEditPaneNumberOfDays,tfProvidersAddPaneName,tfProvidersAddPaneAddress, tfProvidersAddPaneZipcode,
+            tfProvidersEditPaneName, tfProvidersEditPaneAddress, tfProvidersEditPaneZipcode,tfCustomerEmployeesEmailEdit,tfCustomerEmployeesCVREdit,tfCustomerEmployeesCPREdit,tfCustomerEmployeesPhoneEdit,tfCustomerEmployeesNameEdit
+            ,tfCustomerCompaniesCVRNREdit,tfCustomerCompaniesNameEdit,tfCustomerCompaniesPhoneEdit,tfCustomerCompaniesEmailEdit,tfCustomerCompaniesAddressEdit,tfCustomerCompaniesZipcodeEdit;
     @FXML
     private TextArea taCoursesAddPaneCourseDescription,taCoursesEditPaneCourseDescription;
     @FXML
@@ -45,51 +36,35 @@ public class AdminController implements Initializable {
     @FXML
     private TableView<CustomerEmployees> tblViewCustomerEmployee;
     @FXML
-    private TableView<LogIns> tblViewLoogins;
-    @FXML
     private TableView<Courses> tblViewCourses;
     @FXML
     private TableView<CustomerCompanies> tblViewCustomerCompanies;
     @FXML
     private TableView<Provider> tblViewProvider;
     @FXML
-    private TableView<SmartAcademyEmp> tblViewAcademyEmployee;
+    private TableColumn<ObservableList<String>, String> tblColumnEducationFullName, tblColumnEducationCPRNR, tblColumnEducationCompany, tblColumnEducationProvider, tblColumnEducationPriority, tblColumnEducationStartDate, tblColumnEducationEndDate, tblColumnEducationID, tblColumnEducationAMU, tblColumnEducationCourse, tblColumnEducationMail;
     @FXML
-    private TableColumn<ObservableList<String>, String> tblColumnEducationFullName, tblColumnEducationCPRNR, tblColumnEducationCompany, tblColumnEducationProvider, tblColumnEducationPriority, tblColumnEducationStartDate, tblColumnEducationEndDate, tblColumnEducationID, tblColumnEducationAMU, tblColumnEducationCourse, tblColumnEducationMail
-            ,tblColumnAcademyEmployeeName,tblColumnAcademyEmployeePhoneNr,tblColumnAcademyEmployeeMail,tblColumnAcademyEmployeeAddress,tblColumnAcademyEmployeeZipcode;
-    @FXML
-    private TableColumn<ObservableList<String>,String> tblColumnCustomerEmployeeName, tblColumnCustomerEmployeePhoneNr, tblColumnCustomerEmployeeMail, tblColumnCustomerEmployeeCPRNR, tblColumnCustomerEmployeeCVRNR, tblColumnLoginsUsername,
-            tblColumnLoginsPassword, tblColumnLoginsPersonID, tblColumnCourseTitle, tblColumnCompaniesCVRNR, tblColumnCompaniesName, tblColumnCompaniesPhone, tblColumnCompaniesEmail, tblColumnCompaniesAddress,
-            tblColumnCompaniesZipcode,tblColumnCourseAMU,tblColumnCourseDescription,tblColumnCourseNRofDays, tblColumnProviderName, tblColumnProviderAddress, tblColumnProviderZipcode,tblColumnAcademyEmployeeID;
+    private TableColumn<ObservableList<String>,String> tblColumnCustomerEmployeeName, tblColumnCustomerEmployeePhoneNr, tblColumnCustomerEmployeeMail, tblColumnCustomerEmployeeCPRNR, tblColumnCustomerEmployeeCVRNR
+            , tblColumnCourseTitle, tblColumnCompaniesCVRNR, tblColumnCompaniesName, tblColumnCompaniesPhone, tblColumnCompaniesEmail, tblColumnCompaniesAddress,
+            tblColumnCompaniesZipcode,tblColumnCourseAMU,tblColumnCourseDescription,tblColumnCourseNRofDays, tblColumnProviderName, tblColumnProviderAddress, tblColumnProviderZipcode;
 
     ObservableList<EducationPlans> epList = FXCollections.observableArrayList(new ArrayList<>());
     ObservableList<CustomerEmployees> cusEmpList = FXCollections.observableArrayList(new ArrayList<>());
-    ObservableList<LogIns> logInsList = FXCollections.observableArrayList(new ArrayList<>());
     ObservableList<Courses> courseList = FXCollections.observableArrayList(new ArrayList<>());
     ObservableList<Provider> providerList = FXCollections.observableArrayList(new ArrayList<>());
     ObservableList<CustomerCompanies> customerCompaniesList = FXCollections.observableArrayList(new ArrayList<>());
-    ObservableList<SmartAcademyEmp> smartAcademyEmpsList = FXCollections.observableArrayList(new ArrayList<>());
-private int index;
 
+    private int index;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-
-
- // here we start with the actions for educations plans
-  @FXML
+    @FXML
     private void showBtnEducationPlans(ActionEvent event) throws NullPointerException
     {
         paneEducationPlans.setVisible(true);
         paneCoursesAndProviders.setVisible(false);
         paneCustomerCompanies.setVisible(false);
         paneCustomerEmployee.setVisible(false);
-        paneManageLogins.setVisible(false);
         paneEducationPlansEdit.setVisible(false);
-        paneAcademyEmployee.setVisible(false);
+
 
     }
 
@@ -172,20 +147,12 @@ private int index;
         String cprNr = tfEducationCprNr2.getText();
         String empName = tfEducationCustomerEmployeeName2.getText();
         String priority = tfEducationPriority2.getText();
-        String smartAcademyID = tfEducationSmartAcademyEmployeeID2.getText();
         String provider = tfEducationProvider2.getText();
-        DB.insertSQL("insert into tbl_Education_Plan values('"+priority+"','"+empName+"','"+cprNr+"','"+smartAcademyID+"')");
+        DB.insertSQL("insert into tbl_Education_Plan values('"+priority+"','"+empName+"','"+cprNr+"','"+1+"')"); // TODO make it so it is not hard coded but depends on log in might be a major work
         DB.selectSQL("SELECT TOP 1 fld_Education_Plan_ID FROM tbl_Education_Plan ORDER BY fld_Education_Plan_ID DESC");
         String educationPlanID = DB.getData();
-        // this do while loop is for avoiding the error message pending data
-        do {
-            String data = DB.getData();
-            if (data.equals(DB.NOMOREDATA)) {
-                break;
-            } else {
-
-            }
-        } while (true);
+        // this is for avoiding the error message pending data
+        getPendingData();
         DB.insertSQL("insert into tbl_Calendar values('"+amuNo+"','"+provider+"','"+startDate+"','"+endDate+"','"+educationPlanID+"')");
 
         tfEducationProvider2.setText("");
@@ -202,7 +169,7 @@ private int index;
         ObservableList<String> row = FXCollections.observableArrayList();
         tblViewEducationPlans.getItems().clear();
         try {
-            ResultSet rs = DB.createProcResultset("execute view_ep_Admin ");
+            ResultSet rs = DB.createProcResultset("execute SA_view_ep '"+1+"' ");
             tblColumnEducationID.setCellValueFactory(new PropertyValueFactory<>("epID"));
             tblColumnEducationAMU.setCellValueFactory(new PropertyValueFactory<>("AMU"));
             tblColumnEducationCourse.setCellValueFactory(new PropertyValueFactory<>("course"));
@@ -245,8 +212,8 @@ private int index;
         paneEducationPlans.setVisible(false);
         paneCustomerCompanies.setVisible(false);
         paneCustomerEmployee.setVisible(false);
-        paneManageLogins.setVisible(false);
-        paneAcademyEmployee.setVisible(false);
+
+
     }
     @FXML
     private void btnViewCourses (ActionEvent event)
@@ -318,9 +285,9 @@ private int index;
         paneProvidersAdd.setVisible(false);
         index = tblViewProvider.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
         if(index>=0){
-        tfProvidersEditPaneName.setText(tblViewProvider.getItems().get(index).getProviderName());
-        tfProvidersEditPaneAddress.setText(tblViewProvider.getItems().get(index).getAddress());
-        tfProvidersEditPaneZipcode.setText(tblViewProvider.getItems().get(index).getZipcode());}
+            tfProvidersEditPaneName.setText(tblViewProvider.getItems().get(index).getProviderName());
+            tfProvidersEditPaneAddress.setText(tblViewProvider.getItems().get(index).getAddress());
+            tfProvidersEditPaneZipcode.setText(tblViewProvider.getItems().get(index).getZipcode());}
     }
 
     @FXML
@@ -335,7 +302,7 @@ private int index;
         panetblViewProviders.setVisible(false);
         paneProvidersEdit.setVisible(false);
         paneProvidersAdd.setVisible(true);
-        paneAcademyEmployee.setVisible(false);
+
     }
     @FXML
     private void createNewCourse(ActionEvent event)
@@ -457,27 +424,11 @@ private int index;
         String providerName = tfProvidersAddPaneName.getText();
         String address = tfProvidersAddPaneAddress.getText();
         String zipcodde = tfProvidersAddPaneZipcode.getText();
-        String city = tfProvidersAddPaneCity.getText();
-        DB.selectSQL("select fld_Zipcode from tbl_Zipcode");
-        ObservableList zipcodeList = FXCollections.observableArrayList();
-        do {
-            String data = DB.getData();
-            if (data.equals(DB.NOMOREDATA)) {
-                break;
-            } else {
-                zipcodeList.add(data);
-            }
-        } while (true);
-        if (zipcodeList.contains(zipcodde)==false)
-        {
-            DB.insertSQL("insert into tbl_Zipcode values('"+zipcodde+"','"+city+"')");
-        }
-
         DB.insertSQL("insert into tbl_Provider values('"+providerName+"','"+address+"','"+zipcodde+"')");
         tfProvidersAddPaneName.setText("");
         tfProvidersAddPaneAddress.setText("");
         tfProvidersAddPaneZipcode.setText("");
-        tfProvidersAddPaneCity.setText("");
+
     }
 
     @FXML
@@ -485,7 +436,7 @@ private int index;
     {
         index = tblViewProvider.getSelectionModel().getFocusedIndex();
         String providerName = tblViewProvider.getItems().get(index).getProviderName();
-        DB.deleteSQL("delete from tbl_Courses where fld_AMU_No = '"+providerName+"'");
+        DB.deleteSQL("delete from tbl_Provider where fld_Prov_Name = '"+providerName+"'");
         viewProviders();
     }
 
@@ -499,8 +450,7 @@ private int index;
         paneEducationPlans.setVisible(false);
         paneCoursesAndProviders.setVisible(false);
         paneCustomerEmployee.setVisible(false);
-        paneManageLogins.setVisible(false);
-        paneAcademyEmployee.setVisible(false);
+
     }
 
     @FXML
@@ -590,7 +540,7 @@ private int index;
         ObservableList<String> row = FXCollections.observableArrayList();
         tblViewCustomerCompanies.getItems().clear();
         try {
-
+            // cant get it to work with only seeing companies that the employee has done some work for
             ResultSet rs = DB.createProcResultset("execute view_customers_admin");
             tblColumnCompaniesCVRNR.setCellValueFactory(new PropertyValueFactory<>("cvrNr"));
             tblColumnCompaniesName.setCellValueFactory(new PropertyValueFactory<>("customerCompanyName"));
@@ -638,8 +588,8 @@ private int index;
         paneCustomerCompanies.setVisible(false);
         paneEducationPlans.setVisible(false);
         paneCoursesAndProviders.setVisible(false);
-        paneManageLogins.setVisible(false);
-        paneAcademyEmployee.setVisible(false);
+
+
     }
     @FXML
     private void showAddEmployee(ActionEvent event)
@@ -681,8 +631,8 @@ private int index;
         ObservableList<String> row = FXCollections.observableArrayList();
         tblViewCustomerEmployee.getItems().clear();
         try {
-
-            ResultSet rs = DB.createProcResultset("execute view_cusEmps");
+            // we had to hard code this because of time limit
+            ResultSet rs = DB.createProcResultset("execute view_Cus_emps_SA '"+1+"' ");
             tblColumnCustomerEmployeeName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             tblColumnCustomerEmployeePhoneNr.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
             tblColumnCustomerEmployeeMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
@@ -765,274 +715,6 @@ private int index;
     }
 
     // End of the Customer Employee
-
-    // Start of smartAcademy
-    @FXML
-    private void showSmartAcademyPane (ActionEvent event)
-    {
-        paneCustomerCompanies.setVisible(false);
-        paneEducationPlans.setVisible(false);
-        paneCoursesAndProviders.setVisible(false);
-        paneCustomerEmployee.setVisible(false);
-        paneManageLogins.setVisible(false);
-        paneAcademyEmployee.setVisible(true);
-    }
-
-    @FXML
-    private void showAcademyTblView (ActionEvent event)
-    {
-        panetblViewAcademyEmployee.setVisible(true);
-        paneAcademyEmployeeEdit.setVisible(false);
-        paneAcademyEmployeeAdd.setVisible(false);
-        viewAcademyEmployee();
-    }
-
-    @FXML
-    private void showAcademyAddPane (ActionEvent event)
-    {
-        panetblViewAcademyEmployee.setVisible(false);
-        paneAcademyEmployeeEdit.setVisible(false);
-        paneAcademyEmployeeAdd.setVisible(true);
-    }
-
-    @FXML
-    private void showEditAcademyEmployee()
-    {
-        panetblViewAcademyEmployee.setVisible(false);
-        paneAcademyEmployeeEdit.setVisible(true);
-        paneAcademyEmployeeAdd.setVisible(false);
-        index = tblViewAcademyEmployee.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
-        if(index>=0){
-            tfAcademyEmployeesZipcodeEdit.setText(tblViewAcademyEmployee.getItems().get(index).getZipcode());
-            tfAcademyEmployeesAddressEdit.setText(tblViewAcademyEmployee.getItems().get(index).getAddress());
-            tfAcademyEmployeesEmailEdit.setText(tblViewAcademyEmployee.getItems().get(index).getMail());
-            tfAcademyEmployeesNameEdit.setText(tblViewAcademyEmployee.getItems().get(index).getName());
-            tfAcademyEmployeesPhoneEdit.setText(tblViewAcademyEmployee.getItems().get(index).getPhoneNr());
-
-        }
-    }
-
-    private void viewAcademyEmployee()
-    {
-        int counter = 0;
-        ObservableList<String> row = FXCollections.observableArrayList();
-        tblViewAcademyEmployee.getItems().clear();
-        try {
-
-            ResultSet rs = DB.createProcResultset("execute view_SA_emps");
-            tblColumnAcademyEmployeeName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-            tblColumnAcademyEmployeePhoneNr.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
-            tblColumnAcademyEmployeeMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
-            tblColumnAcademyEmployeeAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-            tblColumnAcademyEmployeeZipcode.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
-            tblColumnAcademyEmployeeID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-
-            while (rs.next()) {
-
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    row.add(rs.getString(i));
-                }
-            }
-
-            for (int i = 0; i <row.size()/6 ; i++) {
-                SmartAcademyEmp smartAcademyEmp = new SmartAcademyEmp(row.get(i+counter), row.get(i+counter+1), row.get(i+counter+2), row.get(i+counter+3), row.get(i+counter+4),row.get(i+counter+5));
-                smartAcademyEmpsList.add(smartAcademyEmp);
-                counter+=5;
-
-            }
-            tblViewAcademyEmployee.setItems(smartAcademyEmpsList);
-
-
-        }catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Error on Building Data");
-        }
-    }
-
-    @FXML
-    private void createAcademyEmployee(ActionEvent event)
-    {
-        String employeeName = tfAcademyEmployeesNameAdd.getText();
-        String employeeAddress = tfAcademyEmployeesAddressAdd.getText();
-        String employeeZipcode = tfAcademyEmployeesZipcodeAdd.getText();
-        String employeePhone = tfAcademyEmployeesPhoneAdd.getText();
-        String employeeMail = tfAcademyEmployeesEmailAdd.getText();
-        DB.insertSQL("insert into tbl_Smart_Academy_employee values('"+employeePhone+"','"+employeeName+"','"+employeeMail+"','"+employeeAddress+"','"+employeeZipcode+"')");
-        tfAcademyEmployeesNameAdd.setText("");
-        tfAcademyEmployeesAddressAdd.setText("");
-        tfAcademyEmployeesZipcodeAdd.setText("");
-        tfAcademyEmployeesPhoneAdd.setText("");
-        tfAcademyEmployeesEmailAdd.setText("");
-
-    }
-    @FXML
-    private void updateAcademyEmployee(ActionEvent event)
-    {
-        String phoneNr = tfAcademyEmployeesPhoneEdit.getText();
-        String name = tfAcademyEmployeesNameEdit.getText();
-        String email = tfAcademyEmployeesEmailEdit.getText();
-        String zipcode = tfAcademyEmployeesZipcodeEdit.getText();
-        String address = tfAcademyEmployeesAddressEdit.getText();
-        index = tblViewAcademyEmployee.getSelectionModel().getFocusedIndex();
-        String ID = tblViewAcademyEmployee.getItems().get(index).getID();
-
-        DB.updateSQL("update tbl_Smart_Academy_employee set fld_SA_Emp_Phone_Nr = '"+phoneNr+"',fld_SA_Emp_Name = '"+name+"',fld_SA_Emp_Email = '"+email+"',fld_SA_Emp_Address = '"+address+"',fld_Zipcode = '"+zipcode+"'where fld_SA_Employee_ID = '"+ID+"'");
-
-        tfAcademyEmployeesPhoneEdit.setText("");
-        tfAcademyEmployeesNameEdit.setText("");
-        tfAcademyEmployeesEmailEdit.setText("");
-        tfAcademyEmployeesZipcodeEdit.setText("");
-        tfAcademyEmployeesAddressEdit.setText("");
-    }
-    @FXML
-    private void deleteAcademyEmployee(ActionEvent event)
-    {
-        index = tblViewAcademyEmployee.getSelectionModel().getFocusedIndex();
-        String ID = tblViewAcademyEmployee.getItems().get(index).getID();
-        DB.deleteSQL("delete from tbl_Smart_Academy_employee where fld_SA_Employee_ID = '"+ID+"' ");
-        viewAcademyEmployee();
-
-    }
-
-
-    // end of smartAcademy
-
-
-    //Start of manage Logins
-
-    @FXML
-    private void showManageLoginsPane(ActionEvent event)
-    {
-        paneCustomerEmployee.setVisible(false);
-        paneCustomerCompanies.setVisible(false);
-        paneEducationPlans.setVisible(false);
-        paneCoursesAndProviders.setVisible(false);
-        paneManageLogins.setVisible(true);
-        paneAcademyEmployee.setVisible(false);
-    }
-    @FXML
-    private void showtblViewLogins(ActionEvent event)
-    {
-        panetblViewManageLogins.setVisible(true);
-        paneManageLoginsCreate.setVisible(false);
-        paneManageLoginsEdit.setVisible(false);
-        viewLogins();
-    }
-    @FXML
-    private void showPaneManageLoginsCreateAndEdit(ActionEvent event)
-    {
-        paneManageLoginsCreate.setVisible(true);
-        panetblViewManageLogins.setVisible(false);
-        paneManageLoginsEdit.setVisible(false);
-    }
-    @FXML
-    private void createNewLogin(ActionEvent event)
-    {
-        String username = tfManageLoginsUsername.getText();
-        String password = tfManageLoginsPassword.getText();
-        String personID = tfManageLoginsPersonID.getText();
-
-        DB.insertSQL("insert into tbl_Log_In values('"+password+"','"+username+"','"+personID+"')");
-
-        tfManageLoginsPassword.setText("");
-        tfManageLoginsUsername.setText("");
-        tfManageLoginsPersonID.setText("");
-
-    }
-
-    @FXML
-    private void deleteLogIn (ActionEvent event)
-    {
-        index = tblViewLoogins.getSelectionModel().getFocusedIndex();
-        String password = tblViewLoogins.getItems().get(index).getPassword();
-        DB.deleteSQL("delete from tbl_Log_In where fld_Password = '"+password+"'");
-        viewLogins();
-    }
-
-    private void viewLogins ()
-    {
-        int counter = 0;
-        ObservableList<String> row = FXCollections.observableArrayList();
-        tblViewLoogins.getItems().clear();
-        try {
-
-            ResultSet rs = DB.createProcResultset("execute view_logins");
-            tblColumnLoginsUsername.setCellValueFactory(new PropertyValueFactory<>("userName"));
-            tblColumnLoginsPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
-            tblColumnLoginsPersonID.setCellValueFactory(new PropertyValueFactory<>("personID"));
-
-            while (rs.next()) {
-
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    row.add(rs.getString(i));
-                }
-            }
-
-            for (int i = 0; i <row.size()/3 ; i++) {
-                LogIns logIns = new LogIns(row.get(i+counter), row.get(i+counter+1), row.get(i+counter+2));
-                logInsList.add(logIns);
-                counter+=2;
-            }
-            tblViewLoogins.setItems(logInsList);
-        }catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Error on Building Data");
-        }
-    }
-
-    @FXML
-    private void editLogins() {
-
-        paneManageLoginsCreate.setVisible(false);
-        panetblViewManageLogins.setVisible(false);
-        paneManageLoginsEdit.setVisible(true);
-        index = tblViewLoogins.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
-        if(index>=0) {
-            tfManageLoginsEditUsername.setText(tblViewLoogins.getItems().get(index).getUserName());
-            tfManageLoginsEditPassword.setText(tblViewLoogins.getItems().get(index).getPassword());
-            tfManageLoginsEditPersonID.setText(tblViewLoogins.getItems().get(index).getPersonID());
-        }
-
-    }
-
-    @FXML
-    private void updateLogins(ActionEvent event)
-    {
-        String username = tfManageLoginsEditUsername.getText();
-        String password = tfManageLoginsEditPassword.getText();
-        String personID = tfManageLoginsEditPersonID.getText();
-        index = tblViewLoogins.getSelectionModel().getFocusedIndex();
-
-        String oldPassword = tblViewLoogins.getItems().get(index).getPassword();
-        DB.updateSQL("update tbl_Log_In set fld_Username = '"+username+"', fld_Password = '"+password+"', fld_Person_ID = '"+personID+"' where fld_Password = '"+oldPassword+"'");
-        tfManageLoginsEditUsername.setText("");
-        tfManageLoginsEditPassword.setText("");
-        tfManageLoginsEditPersonID.setText("");
-    }
-
-    // end of manage LOGINS
-
-
-    @FXML
-    private void exportCsvFile(ActionEvent event) throws Exception {
-        Writer writer = null;
-        try {
-            File file = new File("C:\\Users\\Marti\\Desktop\\csvFiler fra SA\\mojn.csv");
-            writer = new BufferedWriter(new FileWriter(file));
-            for (EducationPlans ep : epList) {
-
-                String text = ep.getEpID() + "" + ep.getAMU() + "" + ep.getCourse() + "";
-                writer.write(text);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        finally {
-
-            writer.flush();
-            writer.close();
-        }
-    }
 
     private void getPendingData()
     {
