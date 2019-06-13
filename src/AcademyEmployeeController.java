@@ -17,7 +17,7 @@ public class AcademyEmployeeController {
     @FXML
     private Pane paneEducationPlans,paneEducationPlansCreateAndEdit,paneCoursesAndProviders, paneCoursesAdd,
             paneCustomerCompanies,paneCustomerCompaniesAddAndEdit, paneCustomerEmployeeEdit,paneCustomerEmployeeAdd
-            , panetblViewCourses, panetblViewManageLogins, panetblViewEducation, panetblViewCustomerCompanies, panetblViewCustomerEmployee,
+            , panetblViewCourses, panetblViewEducation, panetblViewCustomerCompanies, panetblViewCustomerEmployee,
             paneEducationPlansEdit,paneCoursesEdit,paneProvidersAdd,paneProvidersEdit,panetblViewProviders,paneCustomerEmployee,paneCustomerCompaniesEdit;
     @FXML
     private TextField tfEducationCustomerEmployeeName,tfEducationCustomerCompanyName,tfEducationPriority,tfEducationCprNr, tfCourseAddPaneCourseTitle,tfCourseAddPaneNumberOfDays,

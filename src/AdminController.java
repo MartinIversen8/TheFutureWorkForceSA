@@ -20,12 +20,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * */
 
 public class AdminController implements Initializable {
+    /**
+     * All the panes used
+     * */
     @FXML
     private Pane paneEducationPlans,paneEducationPlansCreateAndEdit,paneCoursesAndProviders, paneCoursesAdd,
     paneCustomerCompanies,paneCustomerCompaniesAddAndEdit, paneCustomerEmployeeEdit,paneCustomerEmployeeAdd,paneManageLogins
             ,paneManageLoginsCreate, panetblViewCourses, panetblViewManageLogins, panetblViewEducation, panetblViewCustomerCompanies, panetblViewCustomerEmployee,
             paneEducationPlansEdit,paneManageLoginsEdit,paneCoursesEdit,paneProvidersAdd,paneProvidersEdit,panetblViewProviders,paneCustomerEmployee,paneCustomerCompaniesEdit,paneAcademyEmployee
             ,paneAcademyEmployeeAdd,paneAcademyEmployeeEdit,panetblViewAcademyEmployee;
+    /**
+     * All the textfields used
+     * */
     @FXML
     private TextField tfEducationCustomerEmployeeName,tfEducationCustomerCompanyName,tfEducationPriority,tfEducationCprNr, tfCourseAddPaneCourseTitle,tfCourseAddPaneNumberOfDays,
     tfCustomerCompaniesCVRNR,tfCustomerCompaniesName,tfCustomerCompaniesEmail,tfCustomerCompaniesZipcode,tfCustomerCompaniesPhone,tfCustomerCompaniesAddress,tfManageLoginsUsername,tfManageLoginsPersonID,tfManageLoginsPassword,tfEducationAmuNR
@@ -35,17 +41,25 @@ public class AdminController implements Initializable {
     tfProvidersEditPaneName, tfProvidersEditPaneAddress, tfProvidersEditPaneZipcode,tfProvidersAddPaneCity,tfCustomerEmployeesEmailEdit,tfCustomerEmployeesCVREdit,tfCustomerEmployeesCPREdit,tfCustomerEmployeesPhoneEdit,tfCustomerEmployeesNameEdit
     ,tfCustomerCompaniesCVRNREdit,tfCustomerCompaniesNameEdit,tfCustomerCompaniesPhoneEdit,tfCustomerCompaniesEmailEdit,tfCustomerCompaniesAddressEdit,tfCustomerCompaniesZipcodeEdit,tfAcademyEmployeesEmailAdd,tfAcademyEmployeesAddressAdd,tfAcademyEmployeesZipcodeAdd
     ,tfAcademyEmployeesPhoneAdd,tfAcademyEmployeesNameAdd,tfAcademyEmployeesNameEdit,tfAcademyEmployeesPhoneEdit,tfAcademyEmployeesZipcodeEdit,tfAcademyEmployeesAddressEdit,tfAcademyEmployeesEmailEdit;
-
+    /**
+     * All the textareas used
+     * */
     @FXML
     private TextArea taCoursesAddPaneCourseDescription,taCoursesEditPaneCourseDescription;
+    /**
+     * The datepickers we used
+     * */
     @FXML
     private DatePicker dpEducationStartDate,dpEducationEndDate,dpEducationStartDate2,dpEducationEndDate2;
+    /**
+     * tableviews that can contain a class
+     * */
     @FXML
     private TableView<EducationPlans> tblViewEducationPlans;
     @FXML
     private TableView<CustomerEmployees> tblViewCustomerEmployee;
     @FXML
-    private TableView<LogIns> tblViewLoogins;
+    private TableView<LogIns> tblViewLogins;
     @FXML
     private TableView<Courses> tblViewCourses;
     @FXML
@@ -54,14 +68,18 @@ public class AdminController implements Initializable {
     private TableView<Provider> tblViewProvider;
     @FXML
     private TableView<SmartAcademyEmp> tblViewAcademyEmployee;
+    /**
+     * all table columns for the tableviews
+     * */
     @FXML
     private TableColumn<ObservableList<String>, String> tblColumnEducationFullName, tblColumnEducationCPRNR, tblColumnEducationCompany, tblColumnEducationProvider, tblColumnEducationPriority, tblColumnEducationStartDate, tblColumnEducationEndDate, tblColumnEducationID, tblColumnEducationAMU, tblColumnEducationCourse, tblColumnEducationMail
-            ,tblColumnAcademyEmployeeName,tblColumnAcademyEmployeePhoneNr,tblColumnAcademyEmployeeMail,tblColumnAcademyEmployeeAddress,tblColumnAcademyEmployeeZipcode;
-    @FXML
-    private TableColumn<ObservableList<String>,String> tblColumnCustomerEmployeeName, tblColumnCustomerEmployeePhoneNr, tblColumnCustomerEmployeeMail, tblColumnCustomerEmployeeCPRNR, tblColumnCustomerEmployeeCVRNR, tblColumnLoginsUsername,
-            tblColumnLoginsPassword, tblColumnLoginsPersonID, tblColumnCourseTitle, tblColumnCompaniesCVRNR, tblColumnCompaniesName, tblColumnCompaniesPhone, tblColumnCompaniesEmail, tblColumnCompaniesAddress,
-            tblColumnCompaniesZipcode,tblColumnCourseAMU,tblColumnCourseDescription,tblColumnCourseNRofDays, tblColumnProviderName, tblColumnProviderAddress, tblColumnProviderZipcode,tblColumnAcademyEmployeeID;
-
+     ,tblColumnAcademyEmployeeName,tblColumnAcademyEmployeePhoneNr,tblColumnAcademyEmployeeMail,tblColumnAcademyEmployeeAddress,tblColumnAcademyEmployeeZipcode,
+     tblColumnCustomerEmployeeName, tblColumnCustomerEmployeePhoneNr, tblColumnCustomerEmployeeMail, tblColumnCustomerEmployeeCPRNR, tblColumnCustomerEmployeeCVRNR, tblColumnLoginsUsername,
+     tblColumnLoginsPassword, tblColumnLoginsPersonID, tblColumnCourseTitle, tblColumnCompaniesCVRNR, tblColumnCompaniesName, tblColumnCompaniesPhone, tblColumnCompaniesEmail, tblColumnCompaniesAddress,
+     tblColumnCompaniesZipcode,tblColumnCourseAMU,tblColumnCourseDescription,tblColumnCourseNRofDays, tblColumnProviderName, tblColumnProviderAddress, tblColumnProviderZipcode,tblColumnAcademyEmployeeID;
+    /**
+     * Observable lists we use to get to the tableviews
+     * */
     ObservableList<EducationPlans> epList = FXCollections.observableArrayList(new ArrayList<>());
     ObservableList<CustomerEmployees> cusEmpList = FXCollections.observableArrayList(new ArrayList<>());
     ObservableList<LogIns> logInsList = FXCollections.observableArrayList(new ArrayList<>());
@@ -80,6 +98,9 @@ private int index;
 
 
  // here we start with the actions for educations plans
+    /**
+     * method that hides all other panes that the one we want to see
+     * */
   @FXML
     private void showBtnEducationPlans(ActionEvent event) throws NullPointerException
     {
@@ -92,7 +113,10 @@ private int index;
         paneAcademyEmployee.setVisible(false);
 
     }
-
+    /**
+     * method for showing the pane with the tableview and calling
+     *
+     **/
     @FXML
     private void showEducationPlans (ActionEvent event) throws SQLException {
         panetblViewEducation.setVisible(true);
@@ -943,8 +967,8 @@ private int index;
     @FXML
     private void deleteLogIn (ActionEvent event)
     {
-        index = tblViewLoogins.getSelectionModel().getFocusedIndex();
-        String password = tblViewLoogins.getItems().get(index).getPassword();
+        index = tblViewLogins.getSelectionModel().getFocusedIndex();
+        String password = tblViewLogins.getItems().get(index).getPassword();
         DB.deleteSQL("delete from tbl_Log_In where fld_Password = '"+password+"'");
         viewLogins();
     }
@@ -953,7 +977,7 @@ private int index;
     {
         int counter = 0;
         ObservableList<String> row = FXCollections.observableArrayList();
-        tblViewLoogins.getItems().clear();
+        tblViewLogins.getItems().clear();
         try {
 
             ResultSet rs = DB.createProcResultset("execute view_logins");
@@ -973,7 +997,7 @@ private int index;
                 logInsList.add(logIns);
                 counter+=2;
             }
-            tblViewLoogins.setItems(logInsList);
+            tblViewLogins.setItems(logInsList);
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error on Building Data");
@@ -986,11 +1010,11 @@ private int index;
         paneManageLoginsCreate.setVisible(false);
         panetblViewManageLogins.setVisible(false);
         paneManageLoginsEdit.setVisible(true);
-        index = tblViewLoogins.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewLogins.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
         if(index>=0) {
-            tfManageLoginsEditUsername.setText(tblViewLoogins.getItems().get(index).getUserName());
-            tfManageLoginsEditPassword.setText(tblViewLoogins.getItems().get(index).getPassword());
-            tfManageLoginsEditPersonID.setText(tblViewLoogins.getItems().get(index).getPersonID());
+            tfManageLoginsEditUsername.setText(tblViewLogins.getItems().get(index).getUserName());
+            tfManageLoginsEditPassword.setText(tblViewLogins.getItems().get(index).getPassword());
+            tfManageLoginsEditPersonID.setText(tblViewLogins.getItems().get(index).getPersonID());
         }
 
     }
@@ -1001,9 +1025,9 @@ private int index;
         String username = tfManageLoginsEditUsername.getText();
         String password = tfManageLoginsEditPassword.getText();
         String personID = tfManageLoginsEditPersonID.getText();
-        index = tblViewLoogins.getSelectionModel().getFocusedIndex();
+        index = tblViewLogins.getSelectionModel().getFocusedIndex();
 
-        String oldPassword = tblViewLoogins.getItems().get(index).getPassword();
+        String oldPassword = tblViewLogins.getItems().get(index).getPassword();
         DB.updateSQL("update tbl_Log_In set fld_Username = '"+username+"', fld_Password = '"+password+"', fld_Person_ID = '"+personID+"' where fld_Password = '"+oldPassword+"'");
         tfManageLoginsEditUsername.setText("");
         tfManageLoginsEditPassword.setText("");

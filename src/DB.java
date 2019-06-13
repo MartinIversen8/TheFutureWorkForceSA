@@ -16,11 +16,6 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
-
-/**
- *
- *
- */
 public class DB {
     public static Connection con;
     private static PreparedStatement ps;
