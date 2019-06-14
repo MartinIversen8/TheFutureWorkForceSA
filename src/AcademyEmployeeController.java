@@ -177,7 +177,7 @@ public class AcademyEmployeeController {
         String empName = tfEducationCustomerEmployeeName2.getText();
         String priority = tfEducationPriority2.getText();
         String provider = tfEducationProvider2.getText();
-        DB.insertSQL("insert into tbl_Education_Plan values('"+priority+"','"+empName+"','"+cprNr+"','"+1+"')"); // TODO make it so it is not hard coded but depends on log in might be a major work
+        DB.insertSQL("insert into tbl_Education_Plan values('"+priority+"','"+empName+"','"+cprNr+"','"+1+"')");
         DB.selectSQL("SELECT TOP 1 fld_Education_Plan_ID FROM tbl_Education_Plan ORDER BY fld_Education_Plan_ID DESC");
         String educationPlanID = DB.getData();
         // this is for avoiding the error message pending data
@@ -336,7 +336,7 @@ public class AcademyEmployeeController {
         panetblViewProviders.setVisible(false);
         paneProvidersEdit.setVisible(true);
         paneProvidersAdd.setVisible(false);
-        index = tblViewProvider.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewProvider.getSelectionModel().getFocusedIndex();
         if(index>=0){
             tfProvidersEditPaneName.setText(tblViewProvider.getItems().get(index).getProviderName());
             tfProvidersEditPaneAddress.setText(tblViewProvider.getItems().get(index).getAddress());
@@ -570,7 +570,7 @@ public class AcademyEmployeeController {
         panetblViewCustomerCompanies.setVisible(false);
         paneCustomerCompaniesAddAndEdit.setVisible(false);
 
-        index = tblViewCustomerCompanies.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewCustomerCompanies.getSelectionModel().getFocusedIndex();
         if(index>=0){
             tfCustomerCompaniesAddressEdit.setText(tblViewCustomerCompanies.getItems().get(index).getAddress());
             tfCustomerCompaniesCVRNREdit.setText(tblViewCustomerCompanies.getItems().get(index).getCvrNr());
@@ -732,7 +732,7 @@ public class AcademyEmployeeController {
         panetblViewCustomerEmployee.setVisible(false);
         paneCustomerEmployeeAdd.setVisible(false);
         paneCustomerEmployeeEdit.setVisible(true);
-        index = tblViewCustomerEmployee.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewCustomerEmployee.getSelectionModel().getFocusedIndex();
         if(index>=0){
             tfCustomerEmployeesCPREdit.setText(tblViewCustomerEmployee.getItems().get(index).getCprNr());
             tfCustomerEmployeesCVREdit.setText(tblViewCustomerEmployee.getItems().get(index).getCompanyCVRNR());

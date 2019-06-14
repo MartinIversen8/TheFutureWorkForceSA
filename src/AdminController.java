@@ -150,7 +150,7 @@ private int index;
         paneEducationPlansCreateAndEdit.setVisible(false);
         paneEducationPlansEdit.setVisible(true);
         // index is which row of the tblViewEducationPlans were chosen
-        index = tblViewEducationPlans.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewEducationPlans.getSelectionModel().getFocusedIndex();
         // here it gets all info from the select row, and adds it to the text fields and datepickers
         LocalDate localDateEnd = LocalDate.parse(tblViewEducationPlans.getItems().get(index).getEndDate());
         LocalDate localDateStart = LocalDate.parse(tblViewEducationPlans.getItems().get(index).getStartDate());
@@ -664,7 +664,7 @@ private int index;
         panetblViewCustomerCompanies.setVisible(false);
         paneCustomerCompaniesAddAndEdit.setVisible(false);
 
-        index = tblViewCustomerCompanies.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewCustomerCompanies.getSelectionModel().getFocusedIndex();
         if(index>=0){
             tfCustomerCompaniesAddressEdit.setText(tblViewCustomerCompanies.getItems().get(index).getAddress());
             tfCustomerCompaniesCVRNREdit.setText(tblViewCustomerCompanies.getItems().get(index).getCvrNr());
@@ -832,7 +832,7 @@ private int index;
         panetblViewCustomerEmployee.setVisible(false);
         paneCustomerEmployeeAdd.setVisible(false);
         paneCustomerEmployeeEdit.setVisible(true);
-        index = tblViewCustomerEmployee.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewCustomerEmployee.getSelectionModel().getFocusedIndex();
         if(index>=0){
             tfCustomerEmployeesCPREdit.setText(tblViewCustomerEmployee.getItems().get(index).getCprNr());
             tfCustomerEmployeesCVREdit.setText(tblViewCustomerEmployee.getItems().get(index).getCompanyCVRNR());
@@ -1001,7 +1001,7 @@ private int index;
         panetblViewAcademyEmployee.setVisible(false);
         paneAcademyEmployeeEdit.setVisible(true);
         paneAcademyEmployeeAdd.setVisible(false);
-        index = tblViewAcademyEmployee.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewAcademyEmployee.getSelectionModel().getFocusedIndex();
         if(index>=0){
             tfAcademyEmployeesZipcodeEdit.setText(tblViewAcademyEmployee.getItems().get(index).getZipcode());
             tfAcademyEmployeesAddressEdit.setText(tblViewAcademyEmployee.getItems().get(index).getAddress());
