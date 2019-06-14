@@ -216,7 +216,7 @@ public class DB {
 
     public static ResultSet createProcResultset(String sql) throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection con= DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=SmartAcademy","sa","Procity8");
+        Connection con= DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=SmartAcademy","SmartAcademyLogin","12345");
         ResultSet rs = con.createStatement().executeQuery(sql);
         return rs;
     }
