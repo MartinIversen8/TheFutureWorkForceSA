@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -23,8 +24,13 @@ public class LoginController {
 
     @FXML
     private Button btnLogin;
-
     @FXML
+    private Label labelIncorrectLogin;
+    @FXML
+    /**
+     * this method handles the login, if your password or username is wrong you will not be able to access the program
+     *
+     * */
     private void handleLogin (ActionEvent event ) throws NullPointerException, IOException {
 
         String userName = tfUsername.getText();
@@ -66,12 +72,15 @@ public class LoginController {
         }
         else
         {
-            System.out.println("you shall not pass");// TODO make label that says something went wrong
+            labelIncorrectLogin.setVisible(true);
+            labelIncorrectLogin.setText("Incorrect");
         }
         // to avoid pending data error
         getPendingData();
     }
-
+    /**
+     * to avoid pending data error
+     * */
     private void getPendingData()
     {
         if(DB.pendingData == true)

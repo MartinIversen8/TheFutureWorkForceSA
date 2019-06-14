@@ -6,6 +6,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -57,6 +61,9 @@ public class AcademyEmployeeController {
     private int index;
 
     @FXML
+    /**
+     * method that hides all other panes that the one we want to see
+     * */
     private void showBtnEducationPlans(ActionEvent event) throws NullPointerException
     {
         paneEducationPlans.setVisible(true);
@@ -69,6 +76,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * method for showing the pane with the tableview and calling the method viewEducationPlans,
+     * that puts data in the tableview
+     **/
     private void showEducationPlans (ActionEvent event) throws SQLException {
         panetblViewEducation.setVisible(true);
         paneEducationPlansCreateAndEdit.setVisible(false);
@@ -78,6 +89,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * method for showing the pane where you can create a educationPlan
+     * and hiding the other panes
+     * */
     private void showCreatePlans (ActionEvent event)
     {
         panetblViewEducation.setVisible(false);
@@ -86,8 +101,12 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * method for showing the pane where you can edit an EducationPlan
+     * and hiding the other pane. It also gets info from the tableview
+     * and displays it in the text fields that are in the pane
+     * */
     private void editEducationPlan() {
-
         panetblViewEducation.setVisible(false);
         paneEducationPlansCreateAndEdit.setVisible(false);
         paneEducationPlansEdit.setVisible(true);
@@ -105,6 +124,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * method for updating the education plans if something needs to be change
+     * the update statements get the info from the different textfields and datepickers
+     * */
     private void updateEducationPlan(ActionEvent event)
     {
         String startDate = dpEducationStartDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -124,6 +147,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * method for deleting a educationPlan
+     * */
     private void deleteEducationPlan(ActionEvent event) throws SQLException {
         index = tblViewEducationPlans.getSelectionModel().getFocusedIndex();
         String epID = tblViewEducationPlans.getItems().get(index).getEpID();
@@ -139,6 +165,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * method for creating a new educationPlan
+     * */
     private void createEducationPlan(ActionEvent event)
     {
         String startDate = dpEducationStartDate2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -163,7 +192,9 @@ public class AcademyEmployeeController {
         tfEducationCprNr2.setText("");
         tfEducationAmuNR2.setText("");
     }
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewEducationPlans() throws SQLException {
         int counter = 0;
         ObservableList<String> row = FXCollections.observableArrayList();
@@ -206,6 +237,9 @@ public class AcademyEmployeeController {
 
     // here starts the actions we have for Courses and providers
     @FXML
+    /**
+     * showing the course and providers pane
+     * */
     private void showBtnCoursesAndProviders(ActionEvent event)
     {
         paneCoursesAndProviders.setVisible(true);
@@ -216,6 +250,10 @@ public class AcademyEmployeeController {
 
     }
     @FXML
+    /**
+     * shows the pane where you can see the tableview
+     * and loads its content
+     * */
     private void btnViewCourses (ActionEvent event)
     {
         panetblViewCourses.setVisible(true);
@@ -228,6 +266,9 @@ public class AcademyEmployeeController {
 
     }
     @FXML
+    /**
+     * shows the pane where you can add/create a new Course
+     * */
     private void showAddCourses(ActionEvent event)
     {
         paneCoursesAdd.setVisible(true);
@@ -240,6 +281,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * shows the pane where you can Edit a course
+     * and inserts data from the selected course in to textfields
+     * */
     private void showEditCourses(ActionEvent event)
     {
         paneCoursesAdd.setVisible(false);
@@ -248,7 +293,7 @@ public class AcademyEmployeeController {
         paneProvidersAdd.setVisible(false);
         paneProvidersEdit.setVisible(false);
         panetblViewProviders.setVisible(false);
-        index = tblViewCourses.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewCourses.getSelectionModel().getFocusedIndex();
         if(index>=0) {
             tfCourseEditPaneCourseTitle.setText(tblViewCourses.getItems().get(index).getCourseTitle());
             tfCourseEditPaneNumberOfDays.setText(tblViewCourses.getItems().get(index).getCourseNumberOfDays());
@@ -257,6 +302,10 @@ public class AcademyEmployeeController {
 
     }
     @FXML
+    /**
+     * shows the pane where you can see all the providers
+     * and loads the data into the tableview
+     * */
     private void showViewProviders(ActionEvent event)
     {
         paneCoursesAdd.setVisible(false);
@@ -272,6 +321,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * shows the pane where you can edit the provider
+     * and adds information to the textfields
+     * */
     private void showProvidersEditPane()
     {
         paneCoursesAdd.setVisible(false);
@@ -291,6 +344,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * shows the pane were you can add/create a new provider
+     * */
     private void showProvidersAdd ()
     {
         paneCoursesAdd.setVisible(false);
@@ -305,6 +361,9 @@ public class AcademyEmployeeController {
 
     }
     @FXML
+    /**
+     * for when you create a new Course
+     * */
     private void createNewCourse(ActionEvent event)
     {
         String title =  tfCourseAddPaneCourseTitle.getText();
@@ -316,7 +375,9 @@ public class AcademyEmployeeController {
         taCoursesAddPaneCourseDescription.setText("");
 
     }
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewCourses()
     {
         int counter = 0;
@@ -350,6 +411,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * when you update the course
+     * */
     private void updateCourses()
     {
         String courseTitle = tfCourseEditPaneCourseTitle.getText();
@@ -366,6 +430,11 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * for deleting a course
+     * gets which course you want to delete
+     * and then deletes it
+     * */
     private void deleteCourse(ActionEvent event)
     {
         index = tblViewCourses.getSelectionModel().getFocusedIndex();
@@ -374,7 +443,9 @@ public class AcademyEmployeeController {
         viewCourses();
 
     }
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewProviders()
     {
         int counter = 0;
@@ -404,7 +475,9 @@ public class AcademyEmployeeController {
             System.out.println("Error on Building Data");
         }
     }
-
+    /**
+     * for updating the provider in database
+     * */
     @FXML private void updateProvider (ActionEvent event)
     {
         String providerName = tfProvidersEditPaneName.getText();
@@ -419,6 +492,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * for when you create a new provider
+     * */
     private void createNewProvider ()
     {
         String providerName = tfProvidersAddPaneName.getText();
@@ -432,6 +508,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * for when you click delete button
+     * */
     private void deleteProvider()
     {
         index = tblViewProvider.getSelectionModel().getFocusedIndex();
@@ -444,6 +523,9 @@ public class AcademyEmployeeController {
 
     // Start of Customer/Companies
     @FXML
+    /**
+     * shows the pane with Customer
+     * */
     private void showCustomerPane (ActionEvent event)
     {
         paneCustomerCompanies.setVisible(true);
@@ -454,6 +536,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * shows the pane with tableview of Customers
+     * and fills it with data
+     * */
     private void showCustomerTblView (ActionEvent event)
     {
         panetblViewCustomerCompanies.setVisible(true);
@@ -463,6 +549,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * show the pane where you can add/create a new Customer
+     * */
     private void showCustomerAddPane (ActionEvent event)
     {
         panetblViewCustomerCompanies.setVisible(false);
@@ -471,6 +560,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * shows the pane where you can edit the different things in customer
+     * and fills the textfields with data from the selected tableview row
+     * */
     private void showCustomerEditPane()
     {
         paneCustomerCompaniesEdit.setVisible(true);
@@ -490,6 +583,10 @@ public class AcademyEmployeeController {
 
     }
     @FXML
+    /**
+     * for updating information about the customer
+     *
+     * */
     private void updateCustomerCompanies()
     {
         String address = tfCustomerCompaniesAddressEdit.getText();
@@ -513,6 +610,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * for when you create a new company/customer
+     * */
     private void createNewCompany(ActionEvent event)
     {
         String CVRNR = tfCustomerCompaniesCVRNR.getText();
@@ -533,7 +633,9 @@ public class AcademyEmployeeController {
     }
 
 
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewCustomerCompanies()
     {
         int counter = 0;
@@ -570,6 +672,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * for deleting a customerCompany
+     * */
     private void deleteCustomerCompany(ActionEvent event)
     {
         index = tblViewCustomerCompanies.getSelectionModel().getFocusedIndex();
@@ -582,6 +687,9 @@ public class AcademyEmployeeController {
 
     // Start of Customer Employees
     @FXML
+    /**
+     * shows the pane where you can see CustomerEmployee pane
+     * */
     private void showCustomerEmployeePane(ActionEvent event)
     {
         paneCustomerEmployee.setVisible(true);
@@ -592,6 +700,9 @@ public class AcademyEmployeeController {
 
     }
     @FXML
+    /**
+     * shows the pane where you can add/create a Employee
+     * */
     private void showAddEmployee(ActionEvent event)
     {
         paneCustomerEmployeeAdd.setVisible(true);
@@ -600,6 +711,9 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * shows the pane with the tableview of employees
+     * */
     private void showTblViewEmpolyees (ActionEvent event)
     {
         panetblViewCustomerEmployee.setVisible(true);
@@ -609,6 +723,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * shows the pane where you can edit the employee if wanted too
+     * it also loads information from the selected employee who is going to be edited
+     * */
     private void showEditEmployee()
     {
         panetblViewCustomerEmployee.setVisible(false);
@@ -624,7 +742,9 @@ public class AcademyEmployeeController {
 
         }
     }
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewCustomerEmployees()
     {
         int counter = 0;
@@ -662,6 +782,10 @@ public class AcademyEmployeeController {
     }
 
     @FXML
+    /**
+     * for creating a new customerEmployee
+     * inserting input to database
+     * */
     private void createNewCustomerEmployee(ActionEvent event)
     {
         String employeeName = tfCustomerEmployeesName.getText();
@@ -696,6 +820,10 @@ public class AcademyEmployeeController {
 
     }
     @FXML
+    /**
+     * for updating a customerEmployee
+     *
+     * */
     private void updateCustomerEmployees()
     {
         String phoneNr = tfCustomerEmployeesPhoneEdit.getText();
@@ -716,6 +844,33 @@ public class AcademyEmployeeController {
 
     // End of the Customer Employee
 
+    @FXML
+    /**
+     * makes it possible to extract data from EducationPlansTableview from the program
+     * */
+    private void exportCsvFile(ActionEvent event) throws Exception {
+        Writer writer = null;
+        try {
+            File file = new File("C:\\Users\\Marti\\Desktop\\csvFiler fra SA\\csvData.csv");
+            writer = new BufferedWriter(new FileWriter(file));
+            for (EducationPlans ep : epList) {
+
+                String text = ep.getEpID() + "" + ep.getAMU() + "" + ep.getCourse() + ""+ep.getName()+""+ep.getCprNr()+
+                        ""+ep.getProvider()+""+ep.getPriority()+""+ep.getStartDate()+""+ep.getEndDate()+""+ep.getMail()+""+ep.getCompany();
+                writer.write(text);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        finally {
+
+            writer.flush();
+            writer.close();
+        }
+    }
+/**
+ * for avoiding an error with pending data from a previous select statements
+ * */
     private void getPendingData()
     {
         if(DB.pendingData == true)

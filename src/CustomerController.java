@@ -44,6 +44,9 @@ public class CustomerController {
     private int index;
 
     @FXML
+    /**
+     * method that hides all other panes that the one we want to see
+     * */
     private void showBtnEducationPlans(ActionEvent event) throws NullPointerException
     {
         paneEducationPlans.setVisible(true);
@@ -53,6 +56,10 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * method for showing the pane with the tableview and calling the method viewEducationPlans,
+     * that puts data in the tableview
+     **/
     private void showEducationPlans (ActionEvent event) throws SQLException {
         panetblViewEducation.setVisible(true);
         paneEducationPlansEdit.setVisible(false);
@@ -60,6 +67,11 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * method for showing the pane where you can edit an EducationPlan
+     * and hiding the other pane. It also gets info from the tableview
+     * and displays it in the text field that are in the pane
+     * */
     private void editEducationPlan() {
         panetblViewEducation.setVisible(false);
         paneEducationPlansEdit.setVisible(true);
@@ -68,6 +80,10 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * method for updating the education plans if something needs to be change
+     * the update statements get the info from the different textfields and datepickers
+     * */
     private void updateEducationPlan(ActionEvent event)
     {
         String priority = tfEducationPriority.getText();
@@ -77,7 +93,9 @@ public class CustomerController {
     }
 
 
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewEducationPlans() throws SQLException {
         int counter = 0;
         ObservableList<String> row = FXCollections.observableArrayList();
@@ -120,6 +138,9 @@ public class CustomerController {
 
     // here starts the actions we have for Courses and providers
     @FXML
+    /**
+     * showing the course and providers pane
+     * */
     private void showBtnCoursesAndProviders(ActionEvent event)
     {
         paneCoursesAndProviders.setVisible(true);
@@ -128,6 +149,10 @@ public class CustomerController {
 
     }
     @FXML
+    /**
+     * shows the pane where you can see the tableview
+     * and loads its content
+     * */
     private void btnViewCourses (ActionEvent event)
     {
         panetblViewCourses.setVisible(true);
@@ -137,13 +162,19 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * shows the pane where you can see all the providers
+     * and loads the data into the tableview
+     * */
     private void showViewProviders(ActionEvent event)
     {
         panetblViewCourses.setVisible(false);
         panetblViewProviders.setVisible(true);
         viewProviders();
     }
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewCourses()
     {
         int counter = 0;
@@ -175,7 +206,9 @@ public class CustomerController {
             System.out.println("Error on Building Data");
         }
     }
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewProviders()
     {
         int counter = 0;
@@ -207,6 +240,9 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * shows the pane where you can see CustomerEmployee pane
+     * */
     private void showCustomerEmployeePane(ActionEvent event)
     {
         paneCustomerEmployee.setVisible(true);
@@ -217,6 +253,9 @@ public class CustomerController {
 
     }
     @FXML
+    /**
+     * shows the pane where you can add/create a Employee
+     * */
     private void showAddEmployee(ActionEvent event)
     {
         paneCustomerEmployeeAdd.setVisible(true);
@@ -225,6 +264,9 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * shows the pane with the tableview of employees
+     * */
     private void showTblViewEmpolyees (ActionEvent event)
     {
         panetblViewCustomerEmployee.setVisible(true);
@@ -234,12 +276,16 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * shows the pane where you can edit the employee if wanted too
+     * it also loads information from the selected employee who is going to be edited
+     * */
     private void showEditEmployee()
     {
         panetblViewCustomerEmployee.setVisible(false);
         paneCustomerEmployeeAdd.setVisible(false);
         paneCustomerEmployeeEdit.setVisible(true);
-        index = tblViewCustomerEmployee.getSelectionModel().getFocusedIndex(); // maybe change the name to column index and not just call it index
+        index = tblViewCustomerEmployee.getSelectionModel().getFocusedIndex();
         if(index>=0){
             tfCustomerEmployeesCPREdit.setText(tblViewCustomerEmployee.getItems().get(index).getCprNr());
             tfCustomerEmployeesCVREdit.setText(tblViewCustomerEmployee.getItems().get(index).getCompanyCVRNR());
@@ -249,7 +295,9 @@ public class CustomerController {
 
         }
     }
-
+    /**
+     * method for creating and inserting data to the tableview
+     * */
     private void viewCustomerEmployees()
     {
         int counter = 0;
@@ -287,6 +335,10 @@ public class CustomerController {
     }
 
     @FXML
+    /**
+     * for creating a new customerEmployee
+     * inserting input to database
+     * */
     private void createNewCustomerEmployee(ActionEvent event)
     {
         String employeeName = tfCustomerEmployeesName.getText();
@@ -322,6 +374,10 @@ public class CustomerController {
 
     }
     @FXML
+    /**
+     * for updating a customerEmployee
+     *
+     * */
     private void updateCustomerEmployees()
     {
         String phoneNr = tfCustomerEmployeesPhoneEdit.getText();

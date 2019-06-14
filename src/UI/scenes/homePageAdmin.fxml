@@ -81,7 +81,7 @@
                               <TableColumn fx:id="tblColumnEducationCompany" prefWidth="134.0" text="Company" />
                            </columns>
                         </TableView>
-                        <Button fx:id="btnEducationExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                        <Button fx:id="btnEducationExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" onAction="#exportCsvFile" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
                      </children>
                   </Pane>
                   <Pane fx:id="paneEducationPlansEdit" layoutY="112.0" prefHeight="684.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #CEE3F6;" visible="false">

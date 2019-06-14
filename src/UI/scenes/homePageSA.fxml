@@ -53,7 +53,6 @@
                                 <TextField fx:id="tfEducationCprNr2" alignment="CENTER" layoutX="87.0" layoutY="134.0" prefHeight="40.0" prefWidth="250.0" promptText="CPR-NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
                                 <TextField fx:id="tfEducationPriority2" alignment="CENTER" layoutX="463.0" layoutY="134.0" prefHeight="40.0" prefWidth="250.0" promptText="Priority" style="-fx-border-color: Black; -fx-border-width: 2;" />
                                 <TextField fx:id="tfEducationSmartAcademyEmployeeID2" alignment="CENTER" layoutX="87.0" layoutY="201.0" prefHeight="40.0" prefWidth="250.0" promptText="Smart Academy Employee ID" style="-fx-border-color: Black; -fx-border-width: 2;" visible="false" />
-                                <TextField fx:id="tfEducationProvider2" alignment="CENTER" layoutX="463.0" layoutY="201.0" prefHeight="40.0" prefWidth="250.0" promptText="Provider" style="-fx-border-color: Black; -fx-border-width: 2;" visible="false" />
                                 <DatePicker fx:id="dpEducationEndDate2" layoutX="463.0" layoutY="282.0" prefHeight="40.0" prefWidth="250.0" promptText="End Date" style="-fx-border-color: black; -fx-border-width: 2;" />
                                 <DatePicker fx:id="dpEducationStartDate2" layoutX="87.0" layoutY="282.0" prefHeight="40.0" prefWidth="250.0" promptText="Start Date" style="-fx-border-color: black; -fx-border-width: 2;" />
                                 <TextField fx:id="tfEducationAmuNR2" alignment="CENTER" layoutX="87.0" layoutY="207.0" prefHeight="40.0" prefWidth="250.0" promptText="AMU NR." style="-fx-border-color: Black; -fx-border-width: 2;" />
@@ -67,7 +66,7 @@
                         </Pane>
                         <Pane fx:id="panetblViewEducation" layoutX="1.0" layoutY="112.0" prefHeight="685.0" prefWidth="846.0" visible="false">
                             <children>
-                                <Button fx:id="btnEducationExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
+                                <Button fx:id="btnEducationExport" alignment="CENTER" layoutY="645.0" mnemonicParsing="false" onAction="#exportCsvFile" prefHeight="40.0" prefWidth="846.0" style="-fx-background-color: #A9A9F5; -fx-border-color: black; -fx-border-width: 2;" text="Export CSV File" />
                         <TableView fx:id="tblViewEducationPlans" prefHeight="645.0" prefWidth="846.0" style="-fx-border-color: black; -fx-border-width: 2;">
                            <columns>
                               <TableColumn fx:id="tblColumnEducationID" prefWidth="43.0" text="ID" />
@@ -92,7 +91,6 @@
                         <TextField fx:id="tfEducationCprNr" alignment="CENTER" layoutX="87.0" layoutY="134.0" prefHeight="40.0" prefWidth="250.0" promptText="CPR-NR" style="-fx-border-color: Black; -fx-border-width: 2;" />
                         <TextField fx:id="tfEducationPriority" alignment="CENTER" layoutX="463.0" layoutY="134.0" prefHeight="40.0" prefWidth="250.0" promptText="Priority" style="-fx-border-color: Black; -fx-border-width: 2;" />
                         <TextField fx:id="tfEducationSmartAcademyEmployeeID" alignment="CENTER" layoutX="87.0" layoutY="201.0" prefHeight="40.0" prefWidth="250.0" promptText="Smart Academy Employee ID" style="-fx-border-color: Black; -fx-border-width: 2;" visible="false" />
-                        <TextField fx:id="tfEducationProvider" alignment="CENTER" layoutX="463.0" layoutY="201.0" prefHeight="40.0" prefWidth="250.0" promptText="Provider" style="-fx-border-color: Black; -fx-border-width: 2;" visible="false" />
                         <DatePicker fx:id="dpEducationEndDate" layoutX="463.0" layoutY="278.0" prefHeight="40.0" prefWidth="250.0" promptText="End Date" style="-fx-border-color: black; -fx-border-width: 2;" />
                         <DatePicker fx:id="dpEducationStartDate" layoutX="87.0" layoutY="278.0" prefHeight="40.0" prefWidth="250.0" promptText="Start Date" style="-fx-border-color: black; -fx-border-width: 2;" />
                         <TextField fx:id="tfEducationAmuNR" alignment="CENTER" layoutX="87.0" layoutY="214.0" prefHeight="40.0" prefWidth="250.0" promptText="AMU NR." style="-fx-border-color: Black; -fx-border-width: 2;" />
@@ -302,7 +300,7 @@
                   </Pane>
                     </children>
                 </Pane>
-                <Pane fx:id="paneCustomerEmployee" prefHeight="796.0" prefWidth="846.0">
+                <Pane fx:id="paneCustomerEmployee" prefHeight="796.0" prefWidth="846.0" visible="false">
                     <children>
                         <Label alignment="CENTER" prefHeight="64.0" prefWidth="846.0" style="-fx-border-color: Black; -fx-border-width: 2; -fx-background-color: #81BEF7;" text="Customer Employee" textAlignment="CENTER">
                             <font>
